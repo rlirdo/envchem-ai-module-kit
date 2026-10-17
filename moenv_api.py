@@ -118,7 +118,7 @@ def use_chinese_font():
     import os
     import matplotlib
     from matplotlib import font_manager
-    path = "/content/NotoSansTC-Regular.ttf"
+    path = ("/content/" if os.path.isdir("/content") else "") + "NotoSansTC.ttf"
     if not os.path.exists(path):
         url = "https://github.com/google/fonts/raw/main/ofl/notosanstc/NotoSansTC%5Bwght%5D.ttf"
         open(path, "wb").write(requests.get(url, timeout=60).content)
