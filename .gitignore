@@ -1,0 +1,9 @@
+*.key
+.env
+secrets*
+__pycache__/
+*.pyc
+notebooks/moenv_api.py
+notebooks/*.png
+notebooks/*.csv
+notebooks/*.ttf
