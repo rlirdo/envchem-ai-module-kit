@@ -115,9 +115,10 @@ def p13_to_long(df):
 
 def use_chinese_font():
     """讓 matplotlib 圖表可以顯示中文（Colab 用；第一次約 10 秒）。"""
-    import os
+    import os, logging
     import matplotlib
     from matplotlib import font_manager
+    logging.getLogger("matplotlib.font_manager").setLevel(logging.ERROR)   # 關掉 findfont 警告
     path = ("/content/" if os.path.isdir("/content") else "") + "NotoSansTC.ttf"
     if not os.path.exists(path):
         url = "https://github.com/google/fonts/raw/main/ofl/notosanstc/NotoSansTC%5Bwght%5D.ttf"
