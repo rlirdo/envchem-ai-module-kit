@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="游豐兆 博士生（指導教授 楊悠娟 副教授）">
+<title>環境化學 W13 課後學習單｜模組活動一：公開資料、API 與 Prompt-driven Notebook</title>
+<style>
+:root{--navy:#0B1F3A;--deep:#065A82;--teal:#1C7293;--green:#2E7D5B;--moss:#5FA98A;--gold:#C99A3E;
+--bg:#F5F9FA;--ink:#1E293B;--gray:#64748B;--line:#CBD5E1;--soft:#EAF3F6;}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif;color:var(--ink);background:var(--bg);
+ line-height:1.55;font-size:14px;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+a{color:var(--teal);}
+.topnav{max-width:210mm;margin:14px auto 0;display:flex;flex-wrap:wrap;gap:8px;padding:0 4px;}
+.topnav a{display:inline-block;text-decoration:none;font-size:13px;font-weight:700;padding:5px 12px;border-radius:999px;
+ background:#fff;border:1.5px solid var(--teal);color:var(--teal);}
+.topnav a.home{background:var(--navy);border-color:var(--navy);color:#fff;}
+.topnav a.dl{border-color:var(--gold);color:#8A6420;}
+.sheet{max-width:210mm;margin:10px auto 24px;background:#fff;padding:12mm 12mm 8mm;box-shadow:0 4px 22px rgba(11,31,58,.12);border-radius:6px;}
+.hdr{background:var(--navy);color:#fff;border-radius:12px;padding:14px 92px 13px 18px;position:relative;overflow:hidden;}
+.hdr::after{content:"";position:absolute;right:-50px;top:-60px;width:190px;height:190px;border-radius:50%;background:#12305A;}
+.hdr>*{position:relative;z-index:1;}
+.hdr .eyebrow{color:var(--moss);font-weight:700;font-size:12px;letter-spacing:1.5px;}
+.hdr h1{margin:3px 0 2px;font-size:21px;line-height:1.35;}
+.hdr .en{font-style:italic;color:#B9C7D8;font-size:12.5px;}
+.hdr .tag{display:inline-block;margin-top:7px;background:var(--teal);border-radius:999px;padding:2px 12px;font-size:12.5px;}
+.hdr .badge{position:absolute;right:18px;top:14px;z-index:2;width:62px;height:62px;border-radius:50%;background:var(--gold);color:var(--navy);
+ display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;}
+.hdr .badge b{font-size:20px;line-height:1;} .hdr .badge span{font-size:9px;letter-spacing:1.5px;}
+.meta{margin-top:10px;display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1.3px solid var(--line);border-radius:10px;overflow:hidden;font-size:13px;}
+.meta div{padding:5px 10px;border-bottom:1px solid var(--line);}
+.meta div:nth-child(odd){border-right:1px solid var(--line);}
+.meta div.full{grid-column:1/-1;border-right:none;}
+.meta b{color:var(--deep);margin-right:6px;}
+.idbar{margin-top:8px;display:grid;grid-template-columns:1fr 1.3fr 1.3fr;gap:8px;}
+.idbar div{border:1.6px solid var(--teal);border-radius:9px;padding:6px 10px;font-size:13px;background:#F3F9FB;}
+.idbar b{color:var(--deep);}
+.fill{display:inline-block;min-width:70px;border-bottom:1.3px dashed #94A3B8;height:15px;vertical-align:bottom;}
+.mission{margin-top:10px;background:var(--soft);border-left:5px solid var(--teal);border-radius:8px;padding:8px 12px;font-size:13.5px;}
+h2.sec{display:flex;align-items:center;gap:9px;margin:16px 0 7px;font-size:17px;color:var(--navy);break-after:avoid;page-break-after:avoid;}
+h2.sec .n{flex:0 0 auto;width:28px;height:28px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;}
+h2.sec .pt{margin-left:auto;flex:0 0 auto;font-size:12px;color:#fff;background:var(--gray);padding:2px 10px;border-radius:999px;font-weight:700;}
+h3.sub{font-size:14.5px;color:var(--deep);margin:10px 0 5px;}
+.card{border:1.3px solid var(--line);border-radius:11px;padding:10px 12px;background:#fff;}
+.card>*+*{margin-top:8px;}
+.goals{margin:0;padding-left:0;list-style:none;}
+.goals li{display:flex;gap:8px;align-items:flex-start;margin:3px 0;font-size:13.5px;}
+.goals .k{flex:0 0 auto;width:20px;height:20px;border-radius:50%;background:var(--green);color:#fff;font-size:11.5px;display:flex;align-items:center;justify-content:center;margin-top:1px;font-weight:700;}
+.goals .t{display:inline-block;font-size:11px;color:var(--deep);background:var(--soft);border:1px solid #BFD9E2;border-radius:999px;padding:0 7px;margin-left:4px;white-space:nowrap;}
+p.d{margin:0;font-size:13.5px;}
+.tw{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:12.5px;}
+table.small{font-size:11px;}
+th,td{border:1px solid var(--line);padding:4px 6px;vertical-align:top;text-align:left;}
+th{background:#E3EEF2;color:var(--navy);font-weight:700;}
+tr{break-inside:avoid;page-break-inside:avoid;}
+td.c{color:var(--gray);font-size:11.5px;}
+.writebox{border:1.5px dashed var(--moss);border-radius:9px;padding:6px 10px;background:#FAFDFB;}
+.writebox .q{font-size:13px;margin-bottom:2px;}
+.writebox .ln{border-bottom:1px dashed #A7C4B5;height:26px;}
+.pastes{display:grid;gap:10px;}
+.paste{border:2px dashed #93B4C2;border-radius:10px;background:#F5FAFC;color:var(--gray);font-size:12px;min-height:150px;
+ display:flex;align-items:center;justify-content:center;text-align:center;padding:8px;}
+.code{background:var(--navy);color:#E2E8F0;border-radius:9px;padding:9px 12px;font-family:Consolas,'Microsoft JhengHei',monospace;
+ font-size:12px;white-space:pre-wrap;word-break:break-all;line-height:1.6;}
+.code .h{color:var(--gold);font-weight:700;display:block;margin-bottom:2px;font-family:'Microsoft JhengHei','Noto Sans TC',sans-serif;}
+.note{border-radius:8px;padding:7px 11px;font-size:12.8px;}
+.note.tip{background:var(--soft);border-left:4px solid var(--teal);color:#0E4157;}
+.note.warn{background:#FBF4E6;border-left:4px solid var(--gold);color:#6B4A12;}
+.self{background:#F1F8F4;border:1.3px solid #BFDCCB;border-left:5px solid var(--green);border-radius:8px;padding:7px 11px;font-size:12.6px;color:#1F4D37;}
+.self .lab{font-weight:800;color:var(--green);margin-right:6px;}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:13.2px;margin:3px 0;}
+.box{flex:0 0 auto;width:14px;height:14px;border:1.8px solid var(--deep);border-radius:3px;margin-top:3px;}
+.two{display:grid;grid-template-columns:1.2fr 1fr;gap:14px;}
+.sign{margin-top:8px;font-size:13px;}
+.rub th:nth-child(2),.rub td:nth-child(2),.rub th:nth-child(4),.rub td:nth-child(4){text-align:center;white-space:nowrap;}
+.rub tr.total td{background:#F3F6F8;font-weight:800;}
+.dim{margin-top:8px;}
+.dim th{width:22%;}
+.lv{display:inline-block;font-weight:800;padding:0 8px;border-radius:999px;color:#fff;font-size:11.5px;}
+.feedback{margin-top:10px;border:1.6px solid var(--deep);border-radius:10px;padding:8px 12px;background:#F3F8FB;font-size:13px;}
+.feedback .ln{border-bottom:1px dashed #94A3B8;height:24px;}
+.credit{margin-top:14px;padding-top:6px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--gray);}
+.print-foot{display:none;}
+table.ptable,table.ptable>tbody,table.ptable>tbody>tr,table.ptable>tbody>tr>td{display:block;border:0;padding:0;margin:0;width:auto;min-width:0;}
+table.ptable>tbody>tr{break-inside:auto;page-break-inside:auto;}
+table.ptable>tfoot{display:none;}
+@media (max-width:640px){
+ body{font-size:14px;}
+ .sheet{padding:16px 14px;margin:8px 8px 18px;border-radius:4px;}
+ .topnav{margin:10px 8px 0;}
+ .meta{grid-template-columns:1fr;} .meta div:nth-child(odd){border-right:none;}
+ .idbar,.two{grid-template-columns:1fr;}
+ .pastes{grid-template-columns:1fr !important;}
+ .hdr{padding-right:86px;}
+ .hdr h1{font-size:18px;}
+ table{min-width:560px;}
+}
+@page{size:A4;margin:12mm 12mm 16mm;}
+@media print{
+ body{background:#fff;font-size:12.5px;}
+ .topnav{display:none;}
+ .sheet{max-width:none;margin:0;padding:0;box-shadow:none;border-radius:0;}
+ .credit{display:none;}
+ table.ptable{display:table;width:100%;border-collapse:collapse;}
+ table.ptable>tbody{display:table-row-group;} table.ptable>tbody>tr{display:table-row;} table.ptable>tbody>tr>td{display:table-cell;}
+ table.ptable>tfoot{display:table-footer-group;}
+ table.ptable>tfoot td{border:0;padding:3mm 0 0;}
+ .print-foot{display:flex;justify-content:space-between;font-size:9pt;color:var(--gray);
+  border-top:0.6pt solid var(--line);padding-top:1.5mm;}
+ .paste{min-height:118px;}
+ h2.sec{margin:11px 0 5px;}
+ .card{padding:8px 10px;} .card>*+*{margin-top:6px;}
+ .writebox .ln{height:22px;}
+ .mission,.meta{margin-top:7px;}
+ .sec-block{break-inside:auto;}
+ .keep{break-inside:avoid;page-break-inside:avoid;}
+}
+</style></head>
+<body>
+<nav class="topnav"><a class="home" href="../index.html">← 回教學懶人包首頁</a><a href="../m1.html">模組活動一頁面</a><a class="dl" href="W13_M1.pdf" download>下載 PDF</a><a class="dl" href="W13_M1.docx" download>下載 Word</a></nav>
+<table class="ptable"><tfoot><tr><td><div class="print-foot"><span>NDHU 自資系 游豐兆 博士生製作｜指導教授 楊悠娟 副教授</span><span>環境化學 W13 課後學習單</span></div></td></tr></tfoot><tbody><tr><td>
+<main class="sheet">
+
+<header class="hdr">
+  <div class="badge"><b>W13</b><span>WEEK</span></div>
+  <div class="eyebrow">01 / MODULE ONE　·　課後學習單 WORKSHEET</div>
+  <h1>模組活動一：公開資料、API 與 Prompt-driven Notebook</h1>
+  <div class="en">Environmental Chemistry × Generative AI — Hualien Air Quality PBL</div>
+  <div class="tag">用 Prompt 讓 Gemini 在 Colab 寫程式，抓下花蓮站的真實空品數據，存成我的第一份在地數據集</div>
+</header>
+<div class="meta">
+  <div><b>課程</b>環境化學（NRES20050）｜115 學年度第 1 學期</div><div><b>週次</b>W13　第十三週</div>
+  <div><b>模組</b>模組活動一：公開資料、API 與 Prompt-driven Notebook</div><div><b>上課日期</b>2026/11/30（一）</div>
+  <div><b>授課／助教</b>楊悠娟 副教授／游豐兆 博士生</div><div><b>繳交期限</b>2026/12/07（一）上課前</div>
+  <div class="full"><b>繳交方式</b>e 學苑「W13 課後學習單」繳交區：本學習單（PDF 或 Word）＋花蓮站歷史資料 CSV＋Colab 筆記本連結（設為「僅限檢視」，金鑰須先刪除）</div>
+</div>
+<div class="idbar">
+  <div><b>組別</b>　第 <span class="fill" style="min-width:40px"></span> 組</div>
+  <div><b>學號</b>　<span class="fill" style="min-width:120px"></span></div>
+  <div><b>姓名</b>　<span class="fill" style="min-width:120px"></span></div>
+</div>
+<div class="mission"><b style="color:#065A82">本週情境</b>　你是花蓮縣環保局的「數據科技特派員」。本週請延續課堂的 Colab 筆記本，<b>親手</b>抓到花蓮站的真實數據並存成 CSV。這份 CSV 是第 14 週清洗與畫圖、第 16 週 AI 查證的原料，請務必保存好。</div><h2 class="sec"><span class="n" style="background:#C99A3E">★</span>學習目標</h2><div class="card"><ul class="goals"><li><span class="k">1</span><span>能說出環境部「現況」（aqx_p_432）與「歷史」（aqx_p_488）兩支 API 的用途、更新頻率與欄位差異，選對資料源。<span class="t">Rubric：API 資料獲取</span></span></li><li><span class="k">2</span><span>能用 Prompt 讓生成式 AI 寫出可在 Colab 執行的抓取程式，並把報錯丟回 AI 除錯。<span class="t">預期成果：不再害怕大數據與程式碼</span></span></li><li><span class="k">3</span><span>能檢查資料的完整性（起訖時間、筆數、缺值、無效值），完成「花蓮在地資料落地」。<span class="t">Rubric：API 資料獲取</span></span></li><li><span class="k">4</span><span>能說出 O₃、NO₂、NOₓ、PM₂.₅ 等欄位的化學意義與單位。<span class="t">專業學理</span></span></li><li><span class="k">5</span><span>能保護 API 金鑰並誠實記錄 AI 使用歷程。<span class="t">預期成果：分辨 AI 工具價值與人類主體性</span></span></li></ul></div><h2 class="sec"><span class="n" style="background:#1C7293">1</span>任務一｜兩支 API 大比拼：現況 vs. 歷史<span class="pt">15 分</span></h2><div class="card"><p class="d">打開環境部開放資料平台上兩支資料集的說明頁，並用你自己的程式各抓一次，完成下表。</p><div class="code keep">基底網址　https://data.moenv.gov.tw/api/v2/{DataID}?api_key={你的金鑰}&amp;limit=1000&amp;offset=0&amp;format=JSON
+DataID　aqx_p_432＝空氣品質指標（AQI）現況　｜　aqx_p_488＝空氣品質監測小時值（歷史）</div><div class="tw"><table><colgroup><col style="width:30%"><col style="width:35%"><col style="width:35%"></colgroup><tr><th>比較項目</th><th>現況 aqx_p_432</th><th>歷史 aqx_p_488</th></tr><tr><td style="height:8.1mm">資料集中文名稱</td><td></td><td></td></tr><tr><td style="height:8.1mm">主要用途（適合回答什麼問題？）</td><td></td><td></td></tr><tr><td style="height:8.1mm">更新頻率</td><td></td><td></td></tr><tr><td style="height:8.1mm">一次抓到幾筆／幾個測站</td><td></td><td></td></tr><tr><td style="height:8.1mm">時間欄位名稱與格式（照抄一筆）</td><td></td><td></td></tr><tr><td style="height:8.1mm">風速欄位名稱</td><td></td><td></td></tr><tr><td style="height:8.1mm">篩出花蓮站的條件（sitename 或 siteid）</td><td></td><td></td></tr><tr><td style="height:8.1mm">我實際抓到的最早～最晚時間</td><td></td><td></td></tr></table></div><div class="writebox keep"><div class="q">如果要回答「花蓮今天下午適不適合戶外運動？」該用哪一支？要畫「近一個月 O₃ 的日變化」又該用哪一支？為什麼？</div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div><div class="self keep"><span class="lab">自我對照</span>助教 2026/10/17 試抓：aqx_p_432 一次回傳全臺 84 個測站，時間欄 <b>publishtime</b>（如 2026/10/17 17:00:00），風速欄 <b>wind_speed</b>；aqx_p_488 時間欄 <b>datacreationdate</b>（如 2026-09-17 18:00:00），風速欄 <b>windspeed</b>；花蓮站 siteid＝63。兩支 API 欄名不同，之後合併時要小心！</div></div><h2 class="sec"><span class="n" style="background:#065A82">2</span>任務二｜花蓮站「現況快照」實地紀錄<span class="pt">20 分</span></h2><div class="card"><p class="d">課後任選一天，於<b>相隔至少 6 小時</b>的兩個時段，各執行一次 aqx_p_432 程式，親手記下花蓮站的即時數值。這是你真的跑過程式的關鍵證據，助教會與 publishtime 交叉核對。</p><div class="tw"><table><colgroup><col style="width:13%"><col style="width:19%"><col style="width:9%"><col style="width:11%"><col style="width:11%"><col style="width:11%"><col style="width:11%"><col style="width:15%"></colgroup><tr><th>執行時段</th><th>publishtime</th><th>AQI</th><th>PM₂.₅<br>（μg/m³）</th><th>O₃<br>（ppb）</th><th>NO₂<br>（ppb）</th><th>風速<br>（m/s）</th><th>天氣<br>（看窗外）</th></tr><tr><td style="height:9.9mm">第一次<br>___:___</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td style="height:9.9mm">第二次<br>___:___</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table></div><div class="pastes keep" style="grid-template-columns:repeat(2,1fr)"><div class="paste">截圖（A）第一次執行的 Colab 輸出<br>（須看得到 publishtime，金鑰須遮蔽）</div><div class="paste">截圖（B）第二次執行的 Colab 輸出<br>（須看得到 publishtime，金鑰須遮蔽）</div></div><div class="writebox keep"><div class="q">兩次的差異觀察：哪個污染物變化最大？可能與時段（日照、通勤交通）或風速有什麼關係？</div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div><h2 class="sec"><span class="n" style="background:#2E7D5B">3</span>任務三｜Prompt 紀錄與錯誤除錯紀錄<span class="pt">20 分</span></h2><div class="card"><p class="d">記錄你從第一版 Prompt 到「能成功抓到資料」的最後一版。好的 Prompt 通常包含：<b>角色、資料來源（DataID）、要的欄位、輸出格式、執行環境（Colab）、註解語言</b>。</p><div class="code keep"><span class="h">Prompt 範例（申請書模板）</span>你是一個 Python 資料科學家。我有一個環境部空氣品質開放資料的 API 網址：
+https://data.moenv.gov.tw/api/v2/aqx_p_432?api_key=MY_KEY&amp;format=JSON
+（MY_KEY 是代稱，真正的金鑰我會另外存在 Colab Secrets，不貼給 AI）。
+我不會寫程式，請幫我寫出一段可以在 Google Colab 執行的 Python 程式碼，抓取這個網址的資料，
+篩出花蓮站，並把 publishtime、aqi、pm2.5、o3、no2、wind_speed 整理成一個表格（DataFrame）顯示出來。
+請在程式碼裡加上詳細的中文註解。</div><div class="tw"><table><colgroup><col style="width:11%"><col style="width:35%"><col style="width:27%"><col style="width:27%"></colgroup><tr><th>版本</th><th>Prompt 內容（重點句即可）</th><th>AI 回應摘要</th><th>我的修改理由</th></tr><tr><td style="height:14.4mm">第 1 版</td><td></td><td></td><td></td></tr><tr><td style="height:14.4mm">第 2 版</td><td></td><td></td><td></td></tr><tr><td style="height:14.4mm">第 3 版</td><td></td><td></td><td></td></tr><tr><td style="height:14.4mm">最後一版</td><td></td><td></td><td></td></tr></table></div><h3 class="sub">錯誤除錯紀錄（至少 1 筆；沒遇到錯誤也請記錄一次「AI 給的程式和你要的不一樣」）</h3><div class="tw"><table><colgroup><col style="width:5%"><col style="width:27%"><col style="width:24%"><col style="width:30%"><col style="width:14%"></colgroup><tr><th>#</th><th>錯誤類型<br>（如 KeyError、HTTP 401／403、JSONDecodeError、中文亂碼）</th><th>我判斷的原因</th><th>我怎麼修正<br>（丟回 AI 的那句話）</th><th>結果</th></tr><tr><td style="height:10.8mm">1</td><td></td><td></td><td></td><td></td></tr><tr><td style="height:10.8mm">2</td><td></td><td></td><td></td><td></td></tr><tr><td style="height:10.8mm">3</td><td></td><td></td><td></td><td></td></tr></table></div><div class="note tip keep">除錯三步：① 複製完整錯誤訊息的最後幾行；② 連同「我剛剛做了什麼」一起貼回 AI；③ 請 AI 先解釋原因再給修正版，而不是只要一段新程式碼。<b>貼回 AI 前，先確認訊息裡沒有你的金鑰。</b></div></div><h2 class="sec"><span class="n" style="background:#C99A3E">4</span>任務四｜歷史資料落地：起訖、筆數、無效值<span class="pt">20 分</span></h2><div class="card"><p class="d">用 aqx_p_488 抓取花蓮站近 30 天（至少連續 7 天）的逐時資料，匯出 CSV。這份 CSV 是第 14 週的原料，請一併上傳。</p><div class="tw"><table><colgroup><col style="width:32%"><col style="width:30%"><col style="width:38%"></colgroup><tr><th>檢核項目</th><th>我的結果</th><th>我怎麼做到的（程式或 Prompt 關鍵句）</th></tr><tr><td style="height:9.9mm">資料起訖時間（datacreationdate 最早～最晚）</td><td></td><td></td></tr><tr><td style="height:9.9mm">實際筆數（列數 × 欄數）</td><td></td><td></td></tr><tr><td style="height:9.9mm">應有筆數（＝小時數，請寫算式）</td><td></td><td></td></tr><tr><td style="height:9.9mm">缺少的小時數與可能原因</td><td></td><td></td></tr><tr><td style="height:9.9mm">缺值／無效值的寫法與筆數<br>（空白？x？-999？）</td><td></td><td></td></tr><tr><td style="height:9.9mm">匯出檔名與檔案大小</td><td></td><td></td></tr></table></div><div class="note warn keep">誠實紀錄：若抓取失敗改用課堂離線備援 CSV，請註明原因與時間：＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿</div><div class="self keep"><span class="lab">自我對照</span>助教試抓 2026-09-17 18:00～2026-10-17 17:00：花蓮站 718 列（應有 720 列，缺 2 小時）；無效值是「<b>空白字串</b>」──O₃ 6 筆、NO₂ 8 筆、NOₓ 8 筆、PM₂.₅ 5 筆；同平台的逐時值表（aqx_p_13）另有以「<b>x</b>」標示的無效值。兩者都<b>不是 -999</b>！你抓的期間不同，數字不同是正常的。</div></div><h2 class="sec"><span class="n" style="background:#0B1F3A">5</span>任務五｜欄位的化學意義<span class="pt">15 分</span></h2><div class="card"><p class="d">從你的 CSV 挑出下列欄位，寫出中文名稱、單位、主要來源與一個化學意義。可以先查課本，再請 AI 補充，但要自己判斷 AI 說得對不對。</p><div class="tw"><table><colgroup><col style="width:11%"><col style="width:14%"><col style="width:10%"><col style="width:21%"><col style="width:28%"><col style="width:16%"></colgroup><tr><th>欄位名</th><th>中文名稱</th><th>單位</th><th>主要來源<br>（一次／二次污染物？）</th><th>化學意義或相關反應</th><th>我的 CSV 範圍<br>（最小～最大）</th></tr><tr><td style="height:9.0mm">o3</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td style="height:9.0mm">no2</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td style="height:9.0mm">nox</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td style="height:9.0mm">no</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td style="height:9.0mm">pm2.5</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td style="height:9.0mm">aqi</td><td></td><td></td><td></td><td></td><td></td></tr></table></div><div class="note tip keep">提示：NO₂ ＋ hν → NO ＋ O；O ＋ O₂ → O₃；NO ＋ O₃ → NO₂ ＋ O₂（NO 的滴定作用）。NOₓ ＝ NO ＋ NO₂。AQI 不是濃度，而是由多項污染物換算出的指標。</div></div><h2 class="sec"><span class="n" style="background:#2E7D5B">6</span>AI 使用誠實聲明</h2><div class="card"><div class="chk"><span class="box"></span><span>我親自執行程式並抓到花蓮站真實數據（若改用備援 CSV，已在任務四註明）。</span></div><div class="chk"><span class="box"></span><span>兩次現況快照的時間間隔確實超過 6 小時。</span></div><div class="chk"><span class="box"></span><span>本學習單中由 AI 產生的程式碼或文字，我都已在 Prompt 紀錄中註明來源。</span></div><div class="chk"><span class="box"></span><span>表格中的數值是我從自己的程式輸出抄錄，沒有請 AI 編造或「美化」。</span></div><div class="chk"><span class="box"></span><span>我的 API 金鑰沒有出現在截圖、CSV、Colab 分享連結或 AI 對話中。</span></div><div class="chk"><span class="box"></span><span>我理解 AI 可能出錯，學習單中的判斷與結論由我自己負責。</span></div>
+<div class="sign">本週使用的 AI 工具：☐ Gemini（Colab 內建）　☐ ChatGPT　☐ NotebookLM　☐ 其他：＿＿＿＿＿＿</div>
+<div class="sign">我聲明以上勾選內容屬實。　簽名：<span class="fill" style="min-width:140px"></span>　日期：<span class="fill" style="min-width:100px"></span></div></div><h2 class="sec"><span class="n" style="background:#1C7293">7</span>自我檢核清單</h2><div class="card keep"><div class="two"><div><div class="chk"><span class="box"></span><span>任務一的表格每一格都填了，且分得出 publishtime 與 datacreationdate。</span></div><div class="chk"><span class="box"></span><span>兩張快照截圖都看得到時間，金鑰已遮蔽。</span></div><div class="chk"><span class="box"></span><span>Prompt 紀錄至少 2 版，並寫出每次修改的理由。</span></div><div class="chk"><span class="box"></span><span>至少 1 筆錯誤除錯紀錄。</span></div><div class="chk"><span class="box"></span><span>CSV 檔已上傳，檔名含日期區間（如 hualien_488_20261101_20261130.csv）。</span></div><div class="chk"><span class="box"></span><span>欄位化學意義表中的單位都有寫。</span></div></div>
+<div><div class="writebox"><div class="q">下週我想先問的問題：下週（12/7）模組活動二：AI 輔助 EDA 與視覺化。猜猜看：花蓮的 O₃ 幾點最高？NO₂ 呢？</div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div></div></div><h2 class="sec"><span class="n" style="background:#065A82">8</span>評分規準<span class="pt">總分 100</span></h2><div class="card"><div class="tw"><table class="rub"><colgroup><col style="width:30%"><col style="width:9%"><col style="width:49%"><col style="width:12%"></colgroup>
+<tr><th>評分項目</th><th>配分</th><th>評分重點</th><th>得分</th></tr><tr><td>任務一　兩支 API 大比拼</td><td>15</td><td>正確區分兩支 API 的用途、更新頻率、時間欄與風速欄名稱</td><td>＿＿</td></tr><tr><td>任務二　現況快照</td><td>20</td><td>兩次間隔 ≥ 6 小時，數值與截圖、publishtime 一致</td><td>＿＿</td></tr><tr><td>任務三　Prompt 與除錯紀錄</td><td>20</td><td>Prompt 有逐版改進理由；能說出錯誤原因與修正方法</td><td>＿＿</td></tr><tr><td>任務四　歷史資料落地</td><td>20</td><td>起訖、筆數、應有筆數算式正確；能辨認真實無效值寫法；CSV 已繳交</td><td>＿＿</td></tr><tr><td>任務五　欄位化學意義</td><td>15</td><td>單位正確；能區分一次／二次污染物並寫出相關反應</td><td>＿＿</td></tr><tr><td>AI 使用誠實聲明＆自我檢核</td><td>10</td><td>誠實勾選並簽名；金鑰未外洩</td><td>＿＿</td></tr>
+<tr class="total"><td>總分</td><td>100</td><td></td><td>＿＿</td></tr></table></div>
+<div class="tw dim keep"><table><tr><th colspan="2">本週對應 Rubric 向度：API 資料獲取能力（併入 AI 模組成績，＿＿／10）</th></tr>
+<tr><td style="width:22%"><span class="lv" style="background:#2E7D5B">優秀 8–10</span></td><td>能獨立或順暢透過 AI 協作，成功呼叫環境部 API，獲取指定花蓮區域之完整、無誤數據，並成功載入 Colab。</td></tr>
+<tr><td><span class="lv" style="background:#C99A3E">通過 6–7</span></td><td>能抓到資料，但格式混亂，或需在教師大幅協助下才能完成串接。</td></tr>
+<tr><td><span class="lv" style="background:#64748B">需加強 0–5</span></td><td>無法成功串接 API，亦無法利用 AI 生成可執行的代碼。</td></tr>
+<tr><td colspan="2" style="height:17mm"><b style="color:#065A82">教師／助教回饋</b>
+<div style="margin-top:9mm">評分者簽名：<span class="fill" style="min-width:120px"></span>　評分日期：<span class="fill" style="min-width:90px"></span></div></td></tr></table></div>
+</div>
+<footer class="credit"><span>國立東華大學 自然資源與環境學系｜環境化學 NRES20050｜115-1「生成式 AI 融入專業課程」計畫｜W13 課後學習單</span><span>NDHU 自資系 游豐兆 博士生製作｜指導教授 楊悠娟 副教授</span></footer>
+</main>
+</td></tr></tbody></table>
+</body></html>

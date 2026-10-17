@@ -1,0 +1,154 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>API 代碼庫｜環化 × AI 教學懶人包</title><meta name="description" content="API 代碼庫"><link rel="stylesheet" href="assets/site.css"></head><body>
+<header class="top"><div class="in"><a class="brand" href="index.html">環化 × 生成式 AI 教學懶人包</a><nav><a href="index.html">首頁</a><a href="m1.html">活動一</a><a href="m2.html">活動二</a><a href="m3.html">活動三</a><a href="prompts.html">Prompt 指南</a><a href="api.html" class=on>API 代碼庫</a><a href="report.html">報告書範本</a><a href="gallery.html">成果展示</a></nav></div></header>
+<main><section class="hero"><div class="eb">環境部 API 常用代碼庫</div><h1>moenv_api.py</h1><div class="sub">在 Colab 一行載入、一行抓資料；可複製到其他課程（水質、土壤、廢棄物資料集同樣適用）</div>
+<div class="btns"><a class="btn or" href="moenv_api.py">下載 moenv_api.py</a><a class="btn ol" href="https://data.moenv.gov.tw/" target="_blank">環境部環境資料開放平臺</a></div></section>
+<h2>三行開始</h2><div class="card"><div class="pr"><button class="copy">複製</button><div class="pt">!wget -q https://rlirdo.github.io/envchem-ai-module-kit/moenv_api.py
+import moenv_api as ma
+from google.colab import userdata
+API_KEY = userdata.get('MOENV_API_KEY')          # 金鑰放在左側「密鑰」
+df = ma.fetch("aqx_p_488", API_KEY, filters="sitename,EQ,花蓮", sort="datacreationdate desc")
+df.head()</div></div></div>
+<h2>常用資料集（DataID）</h2><div class="card"><div class="tw"><table><tr><th>DataID</th><th>內容</th><th>重點欄位</th></tr>
+<tr><td>aqx_p_432</td><td>空氣品質指標（AQI）現況，每小時更新，全臺各測站一筆</td><td>sitename, publishtime, aqi, pm2.5, o3, no2, nox, wind_speed</td></tr>
+<tr><td>aqx_p_488</td><td>空氣品質指標（AQI）歷史資料，逐時</td><td>datacreationdate, aqi, pm2.5, o3, no2, nox, windspeed, winddirec</td></tr>
+<tr><td>aqx_p_13</td><td>測站每日逐時監測值（一列一天一項目，monitorvalue00–23）</td><td>itemengname, monitordate；含 NMHC、溫濕度、雨量；無效值為 x</td></tr>
+<tr><td>aqx_p_07</td><td>空氣品質監測站基本資料</td><td>花蓮站：siteid 63、花蓮市中正路 210 號、一般站、花東空品區</td></tr></table></div></div>
+<h2>網址參數</h2><div class="card"><div class="tw"><table><tr><th>參數</th><th>意思</th><th>範例</th></tr><tr><td>api_key</td><td>你的金鑰（會員註冊後寄到信箱；效期 1 年，每支 API 每日 5000 次）</td><td>api_key=（存在密鑰）</td></tr>
+<tr><td>limit / offset</td><td>一次抓幾筆（≤1000）／跳過幾筆（翻頁）</td><td>limit=1000&amp;offset=1000</td></tr><tr><td>format</td><td>JSON／CSV／XML</td><td>format=JSON</td></tr>
+<tr><td>filters</td><td>篩選（欄位,EQ,值）</td><td>filters=sitename,EQ,花蓮</td></tr><tr><td>sort</td><td>排序</td><td>sort=datacreationdate desc</td></tr></table></div>
+<div class="tip">沒有金鑰的網址會回傳「api_key 不存在。」；Python 3.13 遇到「Missing Subject Key Identifier」憑證錯誤時，代碼庫的 get_json() 會自動改用仍驗證憑證的連線。真實資料的無效值是空白字串（aqx_p_488）與 x（aqx_p_13），不是 -999；請先用 clean_numeric() 盤點與清洗。</div></div>
+<h2>函式一覽</h2><div class="card"><div class="tw"><table><tr><th>函式</th><th>做什麼</th></tr><tr><td>build_url(dataset_id, api_key, limit, offset, fmt, filters, sort)</td><td>組出 API 網址</td></tr>
+<tr><td>mask(url)</td><td>把網址裡的金鑰遮起來（截圖、貼給 AI 前用）</td></tr><tr><td>fetch(...)</td><td>抓一頁，回傳 DataFrame（欄位先是文字）</td></tr><tr><td>fetch_all(...)</td><td>自動翻頁抓多頁</td></tr>
+<tr><td>clean_numeric(df, cols)</td><td>無效值→NaN 並轉數字，回傳（新表, 各欄清掉幾筆）</td></tr><tr><td>p13_to_long(df)</td><td>aqx_p_13 寬表轉長表（time, item, value）</td></tr><tr><td>use_chinese_font()</td><td>讓 matplotlib 圖表顯示中文</td></tr></table></div></div>
+<h2>完整原始碼</h2><pre class="code"># -*- coding: utf-8 -*-
+&quot;&quot;&quot;
+環境部 API 常用代碼庫（moenv_api.py）
+=====================================
+給「環境化學 × 生成式 AI 模組」學生使用：在 Google Colab 一行載入、一行抓資料。
+
+    !wget -q https://rlirdo.github.io/envchem-ai-module-kit/moenv_api.py
+    import moenv_api as ma
+    df = ma.fetch(&quot;aqx_p_432&quot;, API_KEY, filters=&quot;sitename,EQ,花蓮&quot;)
+
+‧ API 金鑰請放在 Colab 左側「🔑 密鑰」(Secrets)，名稱 MOENV_API_KEY；不要寫進程式碼、不要上傳 GitHub。
+‧ 資料來源：環境部環境資料開放平臺 https://data.moenv.gov.tw/ （政府資料開放授權條款－第 1 版）
+
+NDHU 自資系 游豐兆 博士生製作｜指導教授 楊悠娟 副教授
+&quot;&quot;&quot;
+import io
+import time
+import urllib.parse
+
+import pandas as pd
+import requests
+
+BASE = &quot;https://data.moenv.gov.tw/api/v2/&quot;
+
+# 常用資料集（DataID → 說明）。DataID 可在平臺每個資料集頁面的「API」分頁看到。
+DATASETS = {
+    &quot;aqx_p_432&quot;: &quot;空氣品質指標(AQI)－現況，每小時更新，全臺各測站一筆&quot;,
+    &quot;aqx_p_488&quot;: &quot;空氣品質指標(AQI)(歷史資料)－逐時，可用 filters 篩測站&quot;,
+    &quot;aqx_p_13&quot;:  &quot;空品測站每日逐時監測值－一列一天一項目（monitorvalue00～23），含 O3、NO2、NOx、NMHC、溫濕度、雨量&quot;,
+    &quot;aqx_p_07&quot;:  &quot;空氣品質監測站基本資料－測站地址、類型（一般站／交通站／工業站…）、經緯度&quot;,
+}
+
+# 無效值的常見寫法：儀器維修、校正或資料不足時會出現
+INVALID = [&quot;&quot;, &quot; &quot;, &quot;-&quot;, &quot;--&quot;, &quot;—&quot;, &quot;ND&quot;, &quot;NA&quot;, &quot;N/A&quot;, &quot;x&quot;, &quot;X&quot;, &quot;#&quot;, &quot;*&quot;, &quot;-999&quot;, &quot;-999.0&quot;, &quot;-9999&quot;]
+
+
+def build_url(dataset_id, api_key, limit=1000, offset=0, fmt=&quot;JSON&quot;, filters=None, sort=None):
+    &quot;&quot;&quot;組出 API 網址。filters 例：&#x27;sitename,EQ,花蓮&#x27;；sort 例：&#x27;datacreationdate desc&#x27;。&quot;&quot;&quot;
+    params = {&quot;api_key&quot;: api_key, &quot;limit&quot;: limit, &quot;offset&quot;: offset, &quot;format&quot;: fmt}
+    if filters:
+        params[&quot;filters&quot;] = filters
+    if sort:
+        params[&quot;sort&quot;] = sort
+    return BASE + dataset_id + &quot;?&quot; + urllib.parse.urlencode(params, safe=&quot;,|&quot;)
+
+
+def mask(url):
+    &quot;&quot;&quot;把網址裡的 api_key 遮起來，方便截圖或貼給 AI。&quot;&quot;&quot;
+    import re
+    return re.sub(r&quot;(api_key=)[^&amp;]+&quot;, r&quot;\1********&quot;, url)
+
+
+def get_json(url, timeout=60):
+    &quot;&quot;&quot;下載 JSON。先用 requests；若遇到政府網站憑證的
+    『certificate verify failed: Missing Subject Key Identifier』（Python 3.13 起的嚴格檢查），
+    改用「仍然驗證憑證、只關掉 X509 嚴格模式」的連線再試一次。&quot;&quot;&quot;
+    try:
+        r = requests.get(url, timeout=timeout)
+        r.raise_for_status()
+        return r.json()
+    except requests.exceptions.SSLError:
+        import json, ssl, urllib.request
+        ctx = ssl.create_default_context()
+        ctx.verify_flags &amp;= ~getattr(ssl, &quot;VERIFY_X509_STRICT&quot;, 0)
+        with urllib.request.urlopen(url, timeout=timeout, context=ctx) as resp:
+            return json.loads(resp.read())
+
+
+def fetch(dataset_id, api_key, limit=1000, offset=0, filters=None, sort=None, timeout=60):
+    &quot;&quot;&quot;抓一頁資料，回傳 pandas DataFrame（所有欄位先是文字）。&quot;&quot;&quot;
+    url = build_url(dataset_id, api_key, limit, offset, &quot;JSON&quot;, filters, sort)
+    data = get_json(url, timeout)
+    if isinstance(data, dict):            # 少數資料集會包一層 records
+        data = data.get(&quot;records&quot;, [])
+    return pd.DataFrame(data)
+
+
+def fetch_all(dataset_id, api_key, filters=None, sort=None, max_rows=5000, page=1000, pause=0.5):
+    &quot;&quot;&quot;自動翻頁（offset）直到抓滿 max_rows 或沒有資料。&quot;&quot;&quot;
+    frames = []
+    for offset in range(0, max_rows, page):
+        df = fetch(dataset_id, api_key, limit=page, offset=offset, filters=filters, sort=sort)
+        if df.empty:
+            break
+        frames.append(df)
+        if len(df) &lt; page:
+            break
+        time.sleep(pause)
+    return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+
+
+def clean_numeric(df, cols, invalid=INVALID):
+    &quot;&quot;&quot;把指定欄位的無效值換成 NaN，並轉成數字；回傳新表與各欄被清掉的筆數。&quot;&quot;&quot;
+    out = df.copy()
+    report = {}
+    for c in cols:
+        raw = out[c].astype(str).str.strip()
+        bad = raw.isin(invalid)
+        num = pd.to_numeric(raw.where(~bad), errors=&quot;coerce&quot;)
+        report[c] = int(num.isna().sum())
+        out[c] = num
+    return out, report
+
+
+def p13_to_long(df):
+    &quot;&quot;&quot;aqx_p_13（一列一天一項目、24 個 monitorvalueHH 欄）→ 長表：time, item, value。&quot;&quot;&quot;
+    hours = [f&quot;monitorvalue{h:02d}&quot; for h in range(24)]
+    long = df.melt(id_vars=[&quot;siteid&quot;, &quot;sitename&quot;, &quot;itemengname&quot;, &quot;itemunit&quot;, &quot;monitordate&quot;],
+                   value_vars=hours, var_name=&quot;hour&quot;, value_name=&quot;value&quot;)
+    long[&quot;hour&quot;] = long[&quot;hour&quot;].str[-2:].astype(int)
+    long[&quot;time&quot;] = pd.to_datetime(long[&quot;monitordate&quot;].str.strip()) + pd.to_timedelta(long[&quot;hour&quot;], unit=&quot;h&quot;)
+    long, _ = clean_numeric(long, [&quot;value&quot;])
+    return long.sort_values([&quot;itemengname&quot;, &quot;time&quot;]).reset_index(drop=True)
+
+
+def use_chinese_font():
+    &quot;&quot;&quot;讓 matplotlib 圖表可以顯示中文（Colab 用；第一次約 10 秒）。&quot;&quot;&quot;
+    import os, logging
+    import matplotlib
+    from matplotlib import font_manager
+    logging.getLogger(&quot;matplotlib.font_manager&quot;).setLevel(logging.ERROR)   # 關掉 findfont 警告
+    path = (&quot;/content/&quot; if os.path.isdir(&quot;/content&quot;) else &quot;&quot;) + &quot;NotoSansTC.ttf&quot;
+    if not os.path.exists(path):
+        url = &quot;https://github.com/google/fonts/raw/main/ofl/notosanstc/NotoSansTC%5Bwght%5D.ttf&quot;
+        open(path, &quot;wb&quot;).write(requests.get(url, timeout=60).content)
+    font_manager.fontManager.addfont(path)
+    matplotlib.rcParams[&quot;font.family&quot;] = font_manager.FontProperties(fname=path).get_name()
+    matplotlib.rcParams[&quot;axes.unicode_minus&quot;] = False
+</pre></main>
+<footer><div class="in"><span>NDHU 自資系 游豐兆 博士生製作｜指導教授 楊悠娟 副教授</span><span>國立東華大學 自然資源與環境學系｜環境化學（NRES20050）｜115-1「生成式 AI 融入專業課程」計畫｜<a style="color:#8fd1b4" href="https://github.com/rlirdo/envchem-ai-module-kit">GitHub</a></span></div></footer>
+<div id="lb"><img alt=""></div><script src="assets/site.js"></script></body></html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="游豐兆 博士生（指導教授 楊悠娟 副教授）">
+<title>環境化學 W14 課後學習單｜模組活動二：AI 輔助 EDA 與視覺化</title>
+<style>
+:root{--navy:#0B1F3A;--deep:#065A82;--teal:#1C7293;--green:#2E7D5B;--moss:#5FA98A;--gold:#C99A3E;
+--bg:#F5F9FA;--ink:#1E293B;--gray:#64748B;--line:#CBD5E1;--soft:#EAF3F6;}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif;color:var(--ink);background:var(--bg);
+ line-height:1.55;font-size:14px;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+a{color:var(--teal);}
+.topnav{max-width:210mm;margin:14px auto 0;display:flex;flex-wrap:wrap;gap:8px;padding:0 4px;}
+.topnav a{display:inline-block;text-decoration:none;font-size:13px;font-weight:700;padding:5px 12px;border-radius:999px;
+ background:#fff;border:1.5px solid var(--teal);color:var(--teal);}
+.topnav a.home{background:var(--navy);border-color:var(--navy);color:#fff;}
+.topnav a.dl{border-color:var(--gold);color:#8A6420;}
+.sheet{max-width:210mm;margin:10px auto 24px;background:#fff;padding:12mm 12mm 8mm;box-shadow:0 4px 22px rgba(11,31,58,.12);border-radius:6px;}
+.hdr{background:var(--navy);color:#fff;border-radius:12px;padding:14px 92px 13px 18px;position:relative;overflow:hidden;}
+.hdr::after{content:"";position:absolute;right:-50px;top:-60px;width:190px;height:190px;border-radius:50%;background:#12305A;}
+.hdr>*{position:relative;z-index:1;}
+.hdr .eyebrow{color:var(--moss);font-weight:700;font-size:12px;letter-spacing:1.5px;}
+.hdr h1{margin:3px 0 2px;font-size:21px;line-height:1.35;}
+.hdr .en{font-style:italic;color:#B9C7D8;font-size:12.5px;}
+.hdr .tag{display:inline-block;margin-top:7px;background:var(--teal);border-radius:999px;padding:2px 12px;font-size:12.5px;}
+.hdr .badge{position:absolute;right:18px;top:14px;z-index:2;width:62px;height:62px;border-radius:50%;background:var(--gold);color:var(--navy);
+ display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;}
+.hdr .badge b{font-size:20px;line-height:1;} .hdr .badge span{font-size:9px;letter-spacing:1.5px;}
+.meta{margin-top:10px;display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1.3px solid var(--line);border-radius:10px;overflow:hidden;font-size:13px;}
+.meta div{padding:5px 10px;border-bottom:1px solid var(--line);}
+.meta div:nth-child(odd){border-right:1px solid var(--line);}
+.meta div.full{grid-column:1/-1;border-right:none;}
+.meta b{color:var(--deep);margin-right:6px;}
+.idbar{margin-top:8px;display:grid;grid-template-columns:1fr 1.3fr 1.3fr;gap:8px;}
+.idbar div{border:1.6px solid var(--teal);border-radius:9px;padding:6px 10px;font-size:13px;background:#F3F9FB;}
+.idbar b{color:var(--deep);}
+.fill{display:inline-block;min-width:70px;border-bottom:1.3px dashed #94A3B8;height:15px;vertical-align:bottom;}
+.mission{margin-top:10px;background:var(--soft);border-left:5px solid var(--teal);border-radius:8px;padding:8px 12px;font-size:13.5px;}
+h2.sec{display:flex;align-items:center;gap:9px;margin:16px 0 7px;font-size:17px;color:var(--navy);break-after:avoid;page-break-after:avoid;}
+h2.sec .n{flex:0 0 auto;width:28px;height:28px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;}
+h2.sec .pt{margin-left:auto;flex:0 0 auto;font-size:12px;color:#fff;background:var(--gray);padding:2px 10px;border-radius:999px;font-weight:700;}
+h3.sub{font-size:14.5px;color:var(--deep);margin:10px 0 5px;}
+.card{border:1.3px solid var(--line);border-radius:11px;padding:10px 12px;background:#fff;}
+.card>*+*{margin-top:8px;}
+.goals{margin:0;padding-left:0;list-style:none;}
+.goals li{display:flex;gap:8px;align-items:flex-start;margin:3px 0;font-size:13.5px;}
+.goals .k{flex:0 0 auto;width:20px;height:20px;border-radius:50%;background:var(--green);color:#fff;font-size:11.5px;display:flex;align-items:center;justify-content:center;margin-top:1px;font-weight:700;}
+.goals .t{display:inline-block;font-size:11px;color:var(--deep);background:var(--soft);border:1px solid #BFD9E2;border-radius:999px;padding:0 7px;margin-left:4px;white-space:nowrap;}
+p.d{margin:0;font-size:13.5px;}
+.tw{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:12.5px;}
+table.small{font-size:11px;}
+th,td{border:1px solid var(--line);padding:4px 6px;vertical-align:top;text-align:left;}
+th{background:#E3EEF2;color:var(--navy);font-weight:700;}
+tr{break-inside:avoid;page-break-inside:avoid;}
+td.c{color:var(--gray);font-size:11.5px;}
+.writebox{border:1.5px dashed var(--moss);border-radius:9px;padding:6px 10px;background:#FAFDFB;}
+.writebox .q{font-size:13px;margin-bottom:2px;}
+.writebox .ln{border-bottom:1px dashed #A7C4B5;height:26px;}
+.pastes{display:grid;gap:10px;}
+.paste{border:2px dashed #93B4C2;border-radius:10px;background:#F5FAFC;color:var(--gray);font-size:12px;min-height:150px;
+ display:flex;align-items:center;justify-content:center;text-align:center;padding:8px;}
+.code{background:var(--navy);color:#E2E8F0;border-radius:9px;padding:9px 12px;font-family:Consolas,'Microsoft JhengHei',monospace;
+ font-size:12px;white-space:pre-wrap;word-break:break-all;line-height:1.6;}
+.code .h{color:var(--gold);font-weight:700;display:block;margin-bottom:2px;font-family:'Microsoft JhengHei','Noto Sans TC',sans-serif;}
+.note{border-radius:8px;padding:7px 11px;font-size:12.8px;}
+.note.tip{background:var(--soft);border-left:4px solid var(--teal);color:#0E4157;}
+.note.warn{background:#FBF4E6;border-left:4px solid var(--gold);color:#6B4A12;}
+.self{background:#F1F8F4;border:1.3px solid #BFDCCB;border-left:5px solid var(--green);border-radius:8px;padding:7px 11px;font-size:12.6px;color:#1F4D37;}
+.self .lab{font-weight:800;color:var(--green);margin-right:6px;}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:13.2px;margin:3px 0;}
+.box{flex:0 0 auto;width:14px;height:14px;border:1.8px solid var(--deep);border-radius:3px;margin-top:3px;}
+.two{display:grid;grid-template-columns:1.2fr 1fr;gap:14px;}
+.sign{margin-top:8px;font-size:13px;}
+.rub th:nth-child(2),.rub td:nth-child(2),.rub th:nth-child(4),.rub td:nth-child(4){text-align:center;white-space:nowrap;}
+.rub tr.total td{background:#F3F6F8;font-weight:800;}
+.dim{margin-top:8px;}
+.dim th{width:22%;}
+.lv{display:inline-block;font-weight:800;padding:0 8px;border-radius:999px;color:#fff;font-size:11.5px;}
+.feedback{margin-top:10px;border:1.6px solid var(--deep);border-radius:10px;padding:8px 12px;background:#F3F8FB;font-size:13px;}
+.feedback .ln{border-bottom:1px dashed #94A3B8;height:24px;}
+.credit{margin-top:14px;padding-top:6px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--gray);}
+.print-foot{display:none;}
+table.ptable,table.ptable>tbody,table.ptable>tbody>tr,table.ptable>tbody>tr>td{display:block;border:0;padding:0;margin:0;width:auto;min-width:0;}
+table.ptable>tbody>tr{break-inside:auto;page-break-inside:auto;}
+table.ptable>tfoot{display:none;}
+@media (max-width:640px){
+ body{font-size:14px;}
+ .sheet{padding:16px 14px;margin:8px 8px 18px;border-radius:4px;}
+ .topnav{margin:10px 8px 0;}
+ .meta{grid-template-columns:1fr;} .meta div:nth-child(odd){border-right:none;}
+ .idbar,.two{grid-template-columns:1fr;}
+ .pastes{grid-template-columns:1fr !important;}
+ .hdr{padding-right:86px;}
+ .hdr h1{font-size:18px;}
+ table{min-width:560px;}
+}
+@page{size:A4;margin:12mm 12mm 16mm;}
+@media print{
+ body{background:#fff;font-size:12.5px;}
+ .topnav{display:none;}
+ .sheet{max-width:none;margin:0;padding:0;box-shadow:none;border-radius:0;}
+ .credit{display:none;}
+ table.ptable{display:table;width:100%;border-collapse:collapse;}
+ table.ptable>tbody{display:table-row-group;} table.ptable>tbody>tr{display:table-row;} table.ptable>tbody>tr>td{display:table-cell;}
+ table.ptable>tfoot{display:table-footer-group;}
+ table.ptable>tfoot td{border:0;padding:3mm 0 0;}
+ .print-foot{display:flex;justify-content:space-between;font-size:9pt;color:var(--gray);
+  border-top:0.6pt solid var(--line);padding-top:1.5mm;}
+ .paste{min-height:118px;}
+ h2.sec{margin:11px 0 5px;}
+ .card{padding:8px 10px;} .card>*+*{margin-top:6px;}
+ .writebox .ln{height:22px;}
+ .mission,.meta{margin-top:7px;}
+ .sec-block{break-inside:auto;}
+ .keep{break-inside:avoid;page-break-inside:avoid;}
+}
+</style></head>
+<body>
+<nav class="topnav"><a class="home" href="../index.html">← 回教學懶人包首頁</a><a href="../m2.html">模組活動二頁面</a><a class="dl" href="W14_M2.pdf" download>下載 PDF</a><a class="dl" href="W14_M2.docx" download>下載 Word</a></nav>
+<table class="ptable"><tfoot><tr><td><div class="print-foot"><span>NDHU 自資系 游豐兆 博士生製作｜指導教授 楊悠娟 副教授</span><span>環境化學 W14 課後學習單</span></div></td></tr></tfoot><tbody><tr><td>
+<main class="sheet">
+
+<header class="hdr">
+  <div class="badge"><b>W14</b><span>WEEK</span></div>
+  <div class="eyebrow">02 / MODULE TWO　·　課後學習單 WORKSHEET</div>
+  <h1>模組活動二：AI 輔助 EDA 與視覺化</h1>
+  <div class="en">Environmental Chemistry × Generative AI — Hualien Air Quality PBL</div>
+  <div class="tag">請 AI 清洗無效值、整理結構，畫出 24 小時折線圖、NOₓ–O₃ 散佈圖與日變化雙軸圖，看出花蓮空氣的一天</div>
+</header>
+<div class="meta">
+  <div><b>課程</b>環境化學（NRES20050）｜115 學年度第 1 學期</div><div><b>週次</b>W14　第十四週</div>
+  <div><b>模組</b>模組活動二：AI 輔助 EDA 與視覺化</div><div><b>上課日期</b>2026/12/07（一）</div>
+  <div><b>授課／助教</b>楊悠娟 副教授／游豐兆 博士生</div><div><b>繳交期限</b>2026/12/14（一）上課前</div>
+  <div class="full"><b>繳交方式</b>e 學苑「W14 課後學習單」繳交區：本學習單（PDF 或 Word）＋三張圖（PNG）＋清洗後 CSV＋Colab 筆記本連結（僅限檢視，金鑰須先刪除）</div>
+</div>
+<div class="idbar">
+  <div><b>組別</b>　第 <span class="fill" style="min-width:40px"></span> 組</div>
+  <div><b>學號</b>　<span class="fill" style="min-width:120px"></span></div>
+  <div><b>姓名</b>　<span class="fill" style="min-width:120px"></span></div>
+</div>
+<div class="mission"><b style="color:#065A82">本週情境</b>　上週你把花蓮站的資料「抓下來」，本週要把它「洗乾淨、畫出來、看出規律」。請記得：<b>真實資料的無效值不一定是 -999</b>，先盤點再清洗，別讓範例 Prompt 帶著你走錯路。</div><h2 class="sec"><span class="n" style="background:#C99A3E">★</span>學習目標</h2><div class="card"><ul class="goals"><li><span class="k">1</span><span>能先盤點再清洗：找出資料真實的無效值寫法（空白、x），不盲從範例 Prompt 的 -999。<span class="t">Rubric：AI 輔助視覺化</span></span></li><li><span class="k">2</span><span>能把資料結構化：時間欄轉成日期時間、拆出小時欄、數值欄轉成浮點數。<span class="t">數據處理</span></span></li><li><span class="k">3</span><span>能用精準 Prompt 讓 AI 畫出具科學比較價值的圖（折線、散佈、雙軸），軸標籤、單位與中文都正確。<span class="t">Rubric：AI 輔助視覺化</span></span></li><li><span class="k">4</span><span>能從圖讀出 O₃ 與 NO₂ 的日變化並連結光化學反應，理解「相關≠因果」。<span class="t">專業學理</span></span></li><li><span class="k">5</span><span>能把時空分析濃縮成一句有數據支持的結論。<span class="t">預期成果：透過 AI 進行跨領域問題解決</span></span></li></ul></div><h2 class="sec"><span class="n" style="background:#1C7293">1</span>任務一｜無效值盤點與清洗<span class="pt">15 分</span></h2><div class="card"><p class="d">先「看」再「洗」：請 AI 幫你盤點每個欄位有哪些「不是數字」的值，再決定怎麼清洗。</p><div class="code keep"><span class="h">盤點 Prompt 範例</span>我的 DataFrame 叫 df，欄位都是文字。請幫我寫 Python 程式碼，
+檢查 o3、no2、nox、pm2.5、windspeed 這幾欄裡，有哪些「不是數字」的值（例如空白、x、-999、ND），各出現幾次。</div><div class="tw"><table><colgroup><col style="width:15%"><col style="width:11%"><col style="width:10%"><col style="width:18%"><col style="width:28%"><col style="width:18%"></colgroup><tr><th>欄位</th><th>空白筆數</th><th>x 筆數</th><th>其他怪值<br>（-999、ND…）</th><th>清洗方法<br>（刪整列／轉成 NaN／補值）</th><th>清洗後有效筆數</th></tr><tr><td style="height:8.1mm">o3</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td style="height:8.1mm">no2</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td style="height:8.1mm">nox</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td style="height:8.1mm">pm2.5</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td style="height:8.1mm">windspeed</td><td></td><td></td><td></td><td></td><td></td></tr></table></div><h3 class="sub">反思：AI 會不會照著 -999 寫錯？</h3><div class="code keep"><span class="h">申請書範例 Prompt（請先原封不動試一次）</span>我的環境數據中，有些數值是 -999，這代表無效值。請幫我寫 Python 程式碼，
+把這些無效值剔除，並計算 PM2.5 和 O3 的平均值、最大值與最小值。</div><div class="writebox keep"><div class="q">（A）只寫 -999 時，AI 的程式有處理到空白或 x 嗎？結果發生什麼事（報錯？平均值算不出來？筆數不對？）</div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div><div class="writebox keep"><div class="q">（B）我把 Prompt 改成什麼才正確？這件事提醒我使用 AI 時要注意什麼？</div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div><div class="self keep"><span class="lab">自我對照</span>助教試算（花蓮站 2026/09/17–10/17，aqx_p_488）：無效值只有<b>空白字串</b>──O₃ 6 筆、NO₂ 8 筆、NOₓ 8 筆、PM₂.₅ 5 筆，<b>沒有 -999</b>；逐時值表 aqx_p_13 則另有「x」。</div></div><h2 class="sec"><span class="n" style="background:#065A82">2</span>任務二｜資料結構化：時間欄、小時欄、資料型態<span class="pt">10 分</span></h2><div class="card"><div class="tw"><table><colgroup><col style="width:24%"><col style="width:22%"><col style="width:22%"><col style="width:32%"></colgroup><tr><th>項目</th><th>清洗前</th><th>清洗後</th><th>我用的程式或 Prompt 關鍵句</th></tr><tr><td style="height:9.0mm">時間欄（欄名與資料型態）</td><td>datacreationdate／</td><td></td><td></td></tr><tr><td style="height:9.0mm">小時欄 hour（0–23）</td><td>（無）</td><td></td><td></td></tr><tr><td style="height:9.0mm">o3 的資料型態</td><td></td><td></td><td></td></tr><tr><td style="height:9.0mm">排序（時間由舊到新？）</td><td></td><td></td><td></td></tr><tr><td style="height:9.0mm">列數 × 欄數</td><td></td><td></td><td></td></tr></table></div><div class="note tip keep">提示：pd.to_datetime() 轉時間、.dt.hour 取小時、pd.to_numeric(errors='coerce') 把空白與 x 轉成 NaN。請 AI 解釋每一行在做什麼，而不是只貼上就跑。</div></div><h2 class="sec"><span class="n" style="background:#2E7D5B">3</span>任務三｜三張圖：折線圖、散佈圖、日變化雙軸圖<span class="pt">25 分</span></h2><div class="card"><p class="d">用 Prompt 讓 AI 畫出下列三張圖，存成 PNG 貼在框內。每張圖都要有 APA 式圖說：「<b>圖 N　說明（資料期間，花蓮站）</b>」。</p><div class="code keep"><span class="h">Prompt 範例（折線圖）</span>請幫我寫 Colab 程式碼，使用 matplotlib 畫出一張折線圖。X 軸是一天 24 小時（0–23 時），
+Y 軸畫出花蓮站 O3 與 NO2 每個小時的平均濃度（ppb），用不同顏色區分，加上圖例。
+請確保圖表標題與軸標籤可以顯示中文，Y 軸要寫單位。</div><div class="pastes keep" style="grid-template-columns:repeat(3,1fr)"><div class="paste">圖 1　24 小時折線圖<br>（O₃、NO₂ 逐時平均）黏貼處</div><div class="paste">圖 2　NOₓ–O₃ 散佈圖<br>黏貼處</div><div class="paste">圖 3　日變化雙軸圖<br>（左軸 O₃、右軸 NO₂）黏貼處</div></div><div class="tw"><table><colgroup><col style="width:8%"><col style="width:36%"><col style="width:15%"><col style="width:15%"><col style="width:13%"><col style="width:13%"></colgroup><tr><th>圖號</th><th>圖說（圖 N　說明（資料期間，花蓮站））</th><th>X 軸標籤與單位</th><th>Y 軸標籤與單位</th><th>中文正常顯示</th><th>有圖例</th></tr><tr><td style="height:10.8mm">圖 1</td><td></td><td></td><td></td><td class="c">☐ 是　☐ 否</td><td class="c">☐ 是　☐ 否</td></tr><tr><td style="height:10.8mm">圖 2</td><td></td><td></td><td></td><td class="c">☐ 是　☐ 否</td><td class="c">☐ 是　☐ 否</td></tr><tr><td style="height:10.8mm">圖 3</td><td></td><td></td><td>左：<br>右：</td><td class="c">☐ 是　☐ 否</td><td class="c">☐ 是　☐ 否</td></tr></table></div><div class="note tip keep">中文變成方框（豆腐字）？請 AI「在 Colab 下載並設定 Noto Sans TC 字型」，或使用懶人包 moenv_api.py 的中文字型函式。散佈圖不要用折線連起來──那是非連續資料。</div></div><h2 class="sec"><span class="n" style="background:#C99A3E">4</span>任務四｜讀圖：O₃ 與 NO₂ 的日變化<span class="pt">15 分</span></h2><div class="card"><div class="tw"><table><colgroup><col style="width:13%"><col style="width:14%"><col style="width:16%"><col style="width:14%"><col style="width:16%"><col style="width:27%"></colgroup><tr><th>污染物</th><th>最高時刻</th><th>最高值（ppb）</th><th>最低時刻</th><th>最低值（ppb）</th><th>有沒有第二個小峰？幾點？</th></tr><tr><td style="height:9.9mm">O₃</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td style="height:9.9mm">NO₂</td><td></td><td></td><td></td><td></td><td></td></tr></table></div><div class="writebox keep"><div class="q">用課本的光化學反應解釋：O₃ 為什麼午後最高、清晨最低？NO₂ 的早晚峰可能和什麼有關？請至少寫出一條反應式。</div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div><div class="self keep"><span class="lab">自我對照</span>助教試算（2026/09/17–10/17 花蓮站逐時平均）：O₃ <b>13 時最高 46.7 ppb</b>、<b>7 時最低 19.2 ppb</b>；NO₂ <b>19 時最高 4.2 ppb</b>，<b>9–10 時有小峰 3.2 ppb</b>。你的資料是 11 月，數值不同是正常的──請比較曲線的「形狀」。</div></div><h2 class="sec"><span class="n" style="background:#0B1F3A">5</span>任務五｜NOₓ–O₃ 散佈圖：r 值與「相關≠因果」<span class="pt">15 分</span></h2><div class="card"><div class="tw"><table><colgroup><col style="width:45%"><col style="width:55%"></colgroup><tr><th>項目</th><th>我的結果</th></tr><tr><td style="height:8.1mm">有效配對筆數（NOₓ 與 O₃ 都不是 NaN）</td><td></td></tr><tr><td style="height:8.1mm">相關係數 r（小數點後兩位）</td><td></td></tr><tr><td style="height:8.1mm">NOₓ 平均（ppb）／O₃ 平均（ppb）</td><td></td></tr><tr><td style="height:8.1mm">散佈圖趨勢（正相關／負相關／幾乎無關）</td><td></td></tr></table></div><div class="writebox keep"><div class="q">（A）你的 r 值代表什麼？（B）就算 r 很高，能不能直接說「NOₓ 造成 O₃ 下降」？為什麼？（提示：濃度範圍、日照、風、背景臭氧、時間落差）</div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div><div class="self keep"><span class="lab">自我對照</span>助教試算：r＝<b>0.06</b>、NOₓ 平均 <b>3.6 ppb</b>──幾乎沒有線性相關。這不代表 NO 與 O₃ 不反應，而是散佈圖把白天、夜晚與不同天氣的時段混在一起；花蓮 NOₓ 濃度低，滴定效應也不明顯。</div></div><h2 class="sec"><span class="n" style="background:#1C7293">6</span>任務六｜時空分析：一句話結論<span class="pt">10 分</span></h2><div class="card"><p class="d">用「<b>期間＋地點＋污染物＋數據＋可能機制</b>」五要素寫一句結論，這句話會放進期末報告書的數據圖表集。</p><div class="note tip keep">句型：「在＿＿（資料期間）的花蓮站，O₃ 於＿＿時達最高（＿＿ ppb），比 NO₂ 峰值晚＿＿小時，符合＿＿的光化學機制。」</div><div class="writebox keep"><div class="q">我的一句話結論：</div><div class="ln"></div><div class="ln"></div></div><div class="tw"><table><colgroup><col style="width:45%"><col style="width:55%"></colgroup><tr><th>延伸觀察</th><th>我的答案</th></tr><tr><td style="height:8.1mm">O₃ 最高的那一天是哪天？數值多少？</td><td></td></tr><tr><td style="height:8.1mm">那天的風速、風向或天氣有什麼特別？</td><td></td></tr></table></div><div class="self keep"><span class="lab">自我對照</span>助教資料中，O₃ 最高 82 ppb 出現在 10/14。</div></div><h2 class="sec"><span class="n" style="background:#0B1F3A">7</span>Prompt 紀錄表<span class="pt">併入誠實聲明 10 分</span></h2><div class="card"><p class="d">記錄本週最重要的一串 Prompt：從第一版到最後一版，AI 回了什麼、你為什麼這樣改。</p><div class="tw"><table><colgroup><col style="width:11%"><col style="width:35%"><col style="width:27%"><col style="width:27%"></colgroup><tr><th>版本</th><th>Prompt 內容（重點句即可）</th><th>AI 回應摘要</th><th>我的修改理由</th></tr><tr><td style="height:14.4mm">第 1 版</td><td></td><td></td><td></td></tr><tr><td style="height:14.4mm">第 2 版</td><td></td><td></td><td></td></tr><tr><td style="height:14.4mm">第 3 版</td><td></td><td></td><td></td></tr><tr><td style="height:14.4mm">最後一版</td><td></td><td></td><td></td></tr></table></div></div><h2 class="sec"><span class="n" style="background:#2E7D5B">8</span>AI 使用誠實聲明</h2><div class="card"><div class="chk"><span class="box"></span><span>三張圖是我自己下 Prompt、在 Colab 執行產出，不是直接拿別人或懶人包的圖。</span></div><div class="chk"><span class="box"></span><span>讀圖的數值是我從自己的資料算出，助教的「自我對照」只用來比較。</span></div><div class="chk"><span class="box"></span><span>本學習單中由 AI 產生的程式碼或文字，我都已在 Prompt 紀錄中註明來源。</span></div><div class="chk"><span class="box"></span><span>表格中的數值是我從自己的程式輸出抄錄，沒有請 AI 編造或「美化」。</span></div><div class="chk"><span class="box"></span><span>我的 API 金鑰沒有出現在截圖、CSV、Colab 分享連結或 AI 對話中。</span></div><div class="chk"><span class="box"></span><span>我理解 AI 可能出錯，學習單中的判斷與結論由我自己負責。</span></div>
+<div class="sign">本週使用的 AI 工具：☐ Gemini（Colab 內建）　☐ ChatGPT　☐ NotebookLM　☐ 其他：＿＿＿＿＿＿</div>
+<div class="sign">我聲明以上勾選內容屬實。　簽名：<span class="fill" style="min-width:140px"></span>　日期：<span class="fill" style="min-width:100px"></span></div></div><h2 class="sec"><span class="n" style="background:#1C7293">9</span>自我檢核清單</h2><div class="card keep"><div class="two"><div><div class="chk"><span class="box"></span><span>無效值盤點表有填，且確認過自己資料裡有沒有 -999、空白、x。</span></div><div class="chk"><span class="box"></span><span>時間欄已轉成日期時間，並有 0–23 的小時欄。</span></div><div class="chk"><span class="box"></span><span>三張圖都有圖說「圖 N　說明（資料期間，花蓮站）」。</span></div><div class="chk"><span class="box"></span><span>每張圖的 Y 軸都寫了單位（ppb 或 μg/m³），中文沒有變方框。</span></div><div class="chk"><span class="box"></span><span>能說出 O₃ 與 NO₂ 的最高時刻，並寫出至少一條反應式。</span></div><div class="chk"><span class="box"></span><span>能用自己的話說明「相關≠因果」。</span></div></div>
+<div><div class="writebox"><div class="q">下週我想先問的問題：第 16 週（12/21）模組活動三：環境化學解讀與 AI 查證。你最想請 AI 解釋你圖上的哪個現象？</div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div></div></div><h2 class="sec"><span class="n" style="background:#065A82">10</span>評分規準<span class="pt">總分 100</span></h2><div class="card"><div class="tw"><table class="rub"><colgroup><col style="width:30%"><col style="width:9%"><col style="width:49%"><col style="width:12%"></colgroup>
+<tr><th>評分項目</th><th>配分</th><th>評分重點</th><th>得分</th></tr><tr><td>任務一　無效值盤點與清洗</td><td>15</td><td>找出真實無效值寫法；能反思 -999 範例 Prompt 的盲點</td><td>＿＿</td></tr><tr><td>任務二　資料結構化</td><td>10</td><td>時間欄、小時欄、資料型態處理正確</td><td>＿＿</td></tr><tr><td>任務三　三張圖</td><td>25</td><td>圖型選擇正確；軸標籤、單位、中文、圖例、APA 圖說齊全</td><td>＿＿</td></tr><tr><td>任務四　日變化讀圖</td><td>15</td><td>最高／最低時刻與數值正確，並以光化學反應解釋</td><td>＿＿</td></tr><tr><td>任務五　散佈圖與 r 值</td><td>15</td><td>r 值計算正確；清楚說明相關≠因果</td><td>＿＿</td></tr><tr><td>任務六　一句話結論</td><td>10</td><td>五要素齊全，有數據支持</td><td>＿＿</td></tr><tr><td>Prompt 紀錄＋AI 使用誠實聲明</td><td>10</td><td>Prompt 有逐版修改理由；誠實勾選並簽名</td><td>＿＿</td></tr>
+<tr class="total"><td>總分</td><td>100</td><td></td><td>＿＿</td></tr></table></div>
+<div class="tw dim keep"><table><tr><th colspan="2">本週對應 Rubric 向度：AI 輔助數據視覺化（併入 AI 模組成績，＿＿／10）</th></tr>
+<tr><td style="width:22%"><span class="lv" style="background:#2E7D5B">優秀 8–10</span></td><td>圖表清晰，X/Y 軸標籤與中文正確，能透過精準 Prompt 讓 AI 產出具有科學比較價值的圖表（如雙軸圖、相關性圖）。</td></tr>
+<tr><td><span class="lv" style="background:#C99A3E">通過 6–7</span></td><td>圖表大致完整，但有漏掉中文顯示，或者圖表類型選用不夠精準（如用折線圖畫非連續資料）。</td></tr>
+<tr><td><span class="lv" style="background:#64748B">需加強 0–5</span></td><td>無法產出具備可讀性的數據圖表。</td></tr>
+<tr><td colspan="2" style="height:17mm"><b style="color:#065A82">教師／助教回饋</b>
+<div style="margin-top:9mm">評分者簽名：<span class="fill" style="min-width:120px"></span>　評分日期：<span class="fill" style="min-width:90px"></span></div></td></tr></table></div>
+</div>
+<footer class="credit"><span>國立東華大學 自然資源與環境學系｜環境化學 NRES20050｜115-1「生成式 AI 融入專業課程」計畫｜W14 課後學習單</span><span>NDHU 自資系 游豐兆 博士生製作｜指導教授 楊悠娟 副教授</span></footer>
+</main>
+</td></tr></tbody></table>
+</body></html>

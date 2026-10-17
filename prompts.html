@@ -1,0 +1,40 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prompt 指南｜環化 × AI 教學懶人包</title><meta name="description" content="Prompt 指南"><link rel="stylesheet" href="assets/site.css"></head><body>
+<header class="top"><div class="in"><a class="brand" href="index.html">環化 × 生成式 AI 教學懶人包</a><nav><a href="index.html">首頁</a><a href="m1.html">活動一</a><a href="m2.html">活動二</a><a href="m3.html">活動三</a><a href="prompts.html" class=on>Prompt 指南</a><a href="api.html">API 代碼庫</a><a href="report.html">報告書範本</a><a href="gallery.html">成果展示</a></nav></div></header>
+<main><section class="hero"><div class="eb">Prompt 指南</div><h1>好 Prompt 的 5 個零件</h1><div class="sub">Prompt-driven：不用背語法，把「你要什麼」講清楚，AI 就能寫出程式</div></section>
+<div class="card"><div class="tw"><table><tr><th>零件</th><th>範例</th></tr><tr><td>① 角色</td><td>你是一個 Python 資料科學家</td></tr><tr><td>② 資料來源</td><td>貼上 API 網址（金鑰用變數 API_KEY 代替）或說明你上傳的 CSV</td></tr>
+<tr><td>③ 要哪些欄位</td><td>監測時間、PM2.5、O3、NO2</td></tr><tr><td>④ 輸出形式</td><td>整理成表格（DataFrame）、畫折線圖、存成 CSV</td></tr><tr><td>⑤ 限制與說明</td><td>能在 Colab 執行、加中文註解、圖表要中文標題與單位</td></tr></table></div>
+<div class="note">不要把真的金鑰、同學姓名學號貼給 AI。每一次修改 Prompt 都記到學習單的「Prompt 紀錄表」。</div></div><h2>模組活動一</h2><div class="card"><h3>步驟 4-2｜今天的 Prompt 模板（申請書原版）</h3><div class="sub">第 4 步｜第一次對話：AI 生成程式碼｜<a href="m1.html#s4">看操作手冊</a></div><div class="pr"><button class="copy">複製</button><div class="pt">你是一個 Python 資料科學家。我有一個環境部空氣品質開放資料的 API 網址：
+https://data.moenv.gov.tw/api/v2/aqx_p_432?api_key={API_KEY}&amp;limit=1000&amp;format=JSON
+（金鑰已經存在變數 API_KEY 裡）
+
+我不會寫程式，請幫我寫出一段可以在 Google Colab 運行的 Python 程式碼，功能是要抓取這個網址的資料，並將裡面的監測時間、PM2.5、O3 欄位整理成一個乾淨的表格（DataFrame）顯示出來。
+
+請在程式碼裡加上詳細的中文註解。</div></div></div><div class="card"><h3>步驟 6-1｜兩段 Prompt：篩出花蓮、抓近一個月歷史</h3><div class="sub">第 6 步｜花蓮資料落地存 CSV｜<a href="m1.html#s6">看操作手冊</a></div><div class="pr"><button class="copy">複製</button><div class="pt">【篩花蓮（現況）】
+請把上面的 df_now 只留下 sitename 等於「花蓮」的那一列，並顯示 publishtime、aqi、pm2.5、o3、no2、nox、wind_speed 這幾個欄位。
+
+【抓歷史（近一個月）】
+請幫我寫 Colab 程式碼，用環境部 API 的 aqx_p_488（空氣品質指標歷史資料），加上參數 filters=sitename,EQ,花蓮 和 sort=datacreationdate desc，limit=1000，把花蓮站的資料抓下來，轉成 DataFrame，並告訴我資料的最早與最晚時間、總共幾筆。</div></div></div><h2>模組活動二</h2><div class="card"><h3>步驟 2-2｜盤點 Prompt：哪些值「不是數字」？</h3><div class="sub">第 2 步｜盤點與清除無效值｜<a href="m2.html#s2">看操作手冊</a></div><div class="pr"><button class="copy">複製</button><div class="pt">我的 DataFrame 叫 df，欄位都是文字。
+
+請幫我寫 Python 程式碼，檢查 o3、no2、nox、pm2.5 這幾欄裡，有哪些「不是數字」的值（例如空白、x、-999、ND），各出現幾次。</div></div></div><div class="card"><h3>步驟 2-4｜清洗 Prompt：申請書原版 vs. 改良版</h3><div class="sub">第 2 步｜盤點與清除無效值｜<a href="m2.html#s2">看操作手冊</a></div><div class="pr"><button class="copy">複製</button><div class="pt">【申請書原版】
+我的環境數據中，有些數值是 -999，這代表無效值。請幫我寫 Python 程式碼，把這些無效值剔除，並計算 PM2.5 和 O3 的平均值、最大值與最小值。
+
+【改良版：寫進你的盤點結果】
+我的 DataFrame 叫 df，欄位都是文字。這份花蓮站資料的無效值是空白（讀進來已變成 NaN），aqx_p_13 資料集則用「x」。請把 aqi、so2、co、o3、pm10、pm2.5、no2、nox、no、windspeed、winddirec 轉成數字，無效值一律變成 NaN（不要填 0、不要刪整列），印出每欄清掉幾筆，結果存成新表 clean（不要改動 df），再計算 PM2.5 和 O3 的平均值、最大值與最小值。</div></div></div><div class="card"><h3>步驟 3-2｜結構化 Prompt：時間欄＋小時欄＋存檔</h3><div class="sub">第 3 步｜時間欄位與結構化｜<a href="m2.html#s3">看操作手冊</a></div><div class="pr"><button class="copy">複製</button><div class="pt">請把 clean 的 datacreationdate 轉成日期時間格式，新增一欄 hour（0–23 點），依時間排序，再存成 hualien_clean.csv（utf-8-sig）。
+
+【加碼】
+請再檢查從最早到最晚應該有幾個小時、實際有幾列，並列出缺少的時間點。</div></div></div><div class="card"><h3>步驟 4-2｜繪圖 Prompt：申請書原版＋改良版</h3><div class="sub">第 4 步｜24 小時折線圖｜<a href="m2.html#s4">看操作手冊</a></div><div class="pr"><button class="copy">複製</button><div class="pt">【申請書原版】
+請幫我寫 Colab 程式碼，使用 matplotlib 或 seaborn 畫出一張折線圖。X 軸是時間（一天 24 小時），Y 軸同時畫出 PM2.5 與 O3 的濃度變化，並用不同顏色區分。請確保圖表標題與標籤可以顯示中文。
+
+【改良版：補上資料範圍、單位、字型、檔名】
+資料用 clean 裡 O3 最高的那一天（24 小時）。中文字型已用 ma.use_chinese_font() 設定好，化學式請寫 O3、PM2.5，不要用下標字元。O3 單位是 ppb、PM2.5 是 μg/m³，請把單位寫進圖例；標題寫出測站與日期，存成 fig1_一天24小時.png。</div></div></div><div class="card"><h3>步驟 5-1｜散佈圖 Prompt：NOx 與 O3 有關係嗎？</h3><div class="sub">第 5 步｜NOx–O3 散佈圖與相關｜<a href="m2.html#s5">看操作手冊</a></div><div class="pr"><button class="copy">複製</button><div class="pt">請用 clean 畫一張散佈圖：X 軸是 NOx（ppb），Y 軸是 O3（ppb），點的顏色代表 hour（0–23 點），加上色條、中文標題，並計算兩者的相關係數 r 顯示在標題上。</div></div></div><div class="card"><h3>步驟 6-1｜優化：30 天平均日變化雙 Y 軸圖</h3><div class="sub">第 6 步｜圖表優化與時空分析｜<a href="m2.html#s6">看操作手冊</a></div><div class="pr"><button class="copy">複製</button><div class="pt">請把 clean 依 hour 分組，算出每個小時 O3、NO2 的平均值，畫成雙 Y 軸折線圖（左軸 O3、右軸 NO2），並標出 O3 最高的時間點。
+
+【校正要求】
+標題寫「花蓮站近 30 天平均日變化：O3 與 NO2」，兩個 Y 軸都要標單位（ppb），存成 fig3_日變化雙軸.png，最後印出每小時平均值表。</div></div></div><h2>模組活動三</h2><div class="card"><h3>步驟 1-3｜申請書原版 Prompt（先當「對照組」）</h3><div class="sub">第 1 步｜把圖表與數據交給 AI｜<a href="m3.html#s1">看操作手冊</a></div><div class="pr"><button class="copy">複製</button><div class="pt">這是我撈取花蓮測站春季的數據圖。我發現每天下午 1 點到 3 點，臭氧（O3）濃度會達到峰值，而氮氧化物（NOx）在早上 8 點最高後開始下降。請從環境化學、大氣光化學反應機制的角度，幫我解釋為什麼會出現這種現象？</div></div></div><div class="card"><h3>步驟 1-4｜用真實觀測改寫的 Prompt（Colab 範本步驟 2）</h3><div class="sub">第 1 步｜把圖表與數據交給 AI｜<a href="m3.html#s1">看操作手冊</a></div><div class="pr"><button class="copy">複製</button><div class="pt">【數據摘要】（貼上 Colab 步驟 1 印出的文字）
+
+這是我撈取花蓮測站的數據摘要（如上）。我發現 O3 在中午 12–14 點達到峰值，而 NO2 在晚上 7–9 點最高。請從環境化學、大氣光化學反應機制的角度，幫我解釋為什麼會出現這種現象？
+
+請把你的解釋分成「條列的主張」，每一條都寫出相關的化學反應式，並註明你的依據。</div></div></div><h2>除錯 Prompt（萬用）</h2><div class="card"><div class="pr"><button class="copy">複製</button><div class="pt">我在 Colab 執行你給的程式碼，出現下面的錯誤。請用中文說明原因，並給我修正後的完整程式碼：
+（貼上紅字錯誤訊息）</div></div></div></main>
+<footer><div class="in"><span>NDHU 自資系 游豐兆 博士生製作｜指導教授 楊悠娟 副教授</span><span>國立東華大學 自然資源與環境學系｜環境化學（NRES20050）｜115-1「生成式 AI 融入專業課程」計畫｜<a style="color:#8fd1b4" href="https://github.com/rlirdo/envchem-ai-module-kit">GitHub</a></span></div></footer>
+<div id="lb"><img alt=""></div><script src="assets/site.js"></script></body></html>
