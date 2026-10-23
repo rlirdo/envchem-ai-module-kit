@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="游豐兆 博士生（指導教授 楊悠娟 副教授）">
+<title>環境化學 W13 課前學習單（前測）｜模組活動一：公開資料、API 與 Prompt-driven Notebook</title>
+<style>
+:root{--navy:#0B1F3A;--deep:#065A82;--teal:#1C7293;--green:#2E7D5B;--moss:#5FA98A;--gold:#C99A3E;
+--bg:#F5F9FA;--ink:#1E293B;--gray:#64748B;--line:#CBD5E1;--soft:#EAF3F6;}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif;color:var(--ink);background:var(--bg);
+ line-height:1.55;font-size:14px;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+a{color:var(--teal);}
+.topnav{max-width:210mm;margin:14px auto 0;display:flex;flex-wrap:wrap;gap:8px;padding:0 4px;}
+.topnav a{display:inline-block;text-decoration:none;font-size:13px;font-weight:700;padding:5px 12px;border-radius:999px;
+ background:#fff;border:1.5px solid var(--teal);color:var(--teal);}
+.topnav a.home{background:var(--navy);border-color:var(--navy);color:#fff;}
+.topnav a.dl{border-color:var(--gold);color:#8A6420;}
+.sheet{max-width:210mm;margin:10px auto 24px;background:#fff;padding:12mm 12mm 8mm;box-shadow:0 4px 22px rgba(11,31,58,.12);border-radius:6px;}
+.hdr{background:var(--navy);color:#fff;border-radius:12px;padding:14px 92px 13px 18px;position:relative;overflow:hidden;}
+.hdr::after{content:"";position:absolute;right:-50px;top:-60px;width:190px;height:190px;border-radius:50%;background:#12305A;}
+.hdr>*{position:relative;z-index:1;}
+.hdr .eyebrow{color:var(--moss);font-weight:700;font-size:12px;letter-spacing:1.5px;}
+.hdr h1{margin:3px 0 2px;font-size:21px;line-height:1.35;}
+.hdr .en{font-style:italic;color:#B9C7D8;font-size:12.5px;}
+.hdr .tag{display:inline-block;margin-top:7px;background:var(--teal);border-radius:999px;padding:2px 12px;font-size:12.5px;}
+.hdr .badge{position:absolute;right:18px;top:14px;z-index:2;width:62px;height:62px;border-radius:50%;background:var(--gold);color:var(--navy);
+ display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;}
+.hdr .badge b{font-size:20px;line-height:1;} .hdr .badge span{font-size:9px;letter-spacing:1.5px;}
+.meta{margin-top:10px;display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1.3px solid var(--line);border-radius:10px;overflow:hidden;font-size:13px;}
+.meta div{padding:5px 10px;border-bottom:1px solid var(--line);}
+.meta div:nth-child(odd){border-right:1px solid var(--line);}
+.meta div.full{grid-column:1/-1;border-right:none;}
+.meta b{color:var(--deep);margin-right:6px;}
+.idbar{margin-top:8px;display:grid;grid-template-columns:1fr 1.3fr 1.3fr;gap:8px;}
+.idbar div{border:1.6px solid var(--teal);border-radius:9px;padding:6px 10px;font-size:13px;background:#F3F9FB;}
+.idbar b{color:var(--deep);}
+.fill{display:inline-block;min-width:70px;border-bottom:1.3px dashed #94A3B8;height:15px;vertical-align:bottom;}
+.mission{margin-top:10px;background:var(--soft);border-left:5px solid var(--teal);border-radius:8px;padding:8px 12px;font-size:13.5px;}
+h2.sec{display:flex;align-items:center;gap:9px;margin:16px 0 7px;font-size:17px;color:var(--navy);break-after:avoid;page-break-after:avoid;}
+h2.sec .n{flex:0 0 auto;width:28px;height:28px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;}
+h2.sec .pt{margin-left:auto;flex:0 0 auto;font-size:12px;color:#fff;background:var(--gray);padding:2px 10px;border-radius:999px;font-weight:700;}
+h3.sub{font-size:14.5px;color:var(--deep);margin:10px 0 5px;}
+.card{border:1.3px solid var(--line);border-radius:11px;padding:10px 12px;background:#fff;}
+.card>*+*{margin-top:8px;}
+.goals{margin:0;padding-left:0;list-style:none;}
+.goals li{display:flex;gap:8px;align-items:flex-start;margin:3px 0;font-size:13.5px;}
+.goals .k{flex:0 0 auto;width:20px;height:20px;border-radius:50%;background:var(--green);color:#fff;font-size:11.5px;display:flex;align-items:center;justify-content:center;margin-top:1px;font-weight:700;}
+.goals .t{display:inline-block;font-size:11px;color:var(--deep);background:var(--soft);border:1px solid #BFD9E2;border-radius:999px;padding:0 7px;margin-left:4px;white-space:nowrap;}
+p.d{margin:0;font-size:13.5px;}
+.tw{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:12.5px;}
+table.small{font-size:11px;}
+th,td{border:1px solid var(--line);padding:4px 6px;vertical-align:top;text-align:left;}
+th{background:#E3EEF2;color:var(--navy);font-weight:700;}
+tr{break-inside:avoid;page-break-inside:avoid;}
+td.c{color:var(--gray);font-size:11.5px;}
+.writebox{border:1.5px dashed var(--moss);border-radius:9px;padding:6px 10px;background:#FAFDFB;}
+.writebox .q{font-size:13px;margin-bottom:2px;}
+.writebox .ln{border-bottom:1px dashed #A7C4B5;height:26px;}
+.pastes{display:grid;gap:10px;}
+.paste{border:2px dashed #93B4C2;border-radius:10px;background:#F5FAFC;color:var(--gray);font-size:12px;min-height:150px;
+ display:flex;align-items:center;justify-content:center;text-align:center;padding:8px;}
+.code{background:var(--navy);color:#E2E8F0;border-radius:9px;padding:9px 12px;font-family:Consolas,'Microsoft JhengHei',monospace;
+ font-size:12px;white-space:pre-wrap;word-break:break-all;line-height:1.6;}
+.code .h{color:var(--gold);font-weight:700;display:block;margin-bottom:2px;font-family:'Microsoft JhengHei','Noto Sans TC',sans-serif;}
+.note{border-radius:8px;padding:7px 11px;font-size:12.8px;}
+.note.tip{background:var(--soft);border-left:4px solid var(--teal);color:#0E4157;}
+.note.warn{background:#FBF4E6;border-left:4px solid var(--gold);color:#6B4A12;}
+.self{background:#F1F8F4;border:1.3px solid #BFDCCB;border-left:5px solid var(--green);border-radius:8px;padding:7px 11px;font-size:12.6px;color:#1F4D37;}
+.self .lab{font-weight:800;color:var(--green);margin-right:6px;}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:13.2px;margin:3px 0;}
+.box{flex:0 0 auto;width:14px;height:14px;border:1.8px solid var(--deep);border-radius:3px;margin-top:3px;}
+.two{display:grid;grid-template-columns:1.2fr 1fr;gap:14px;}
+.sign{margin-top:8px;font-size:13px;}
+.rub th:nth-child(2),.rub td:nth-child(2),.rub th:nth-child(4),.rub td:nth-child(4){text-align:center;white-space:nowrap;}
+.rub tr.total td{background:#F3F6F8;font-weight:800;}
+.dim{margin-top:8px;}
+.dim th{width:22%;}
+.lv{display:inline-block;font-weight:800;padding:0 8px;border-radius:999px;color:#fff;font-size:11.5px;}
+.feedback{margin-top:10px;border:1.6px solid var(--deep);border-radius:10px;padding:8px 12px;background:#F3F8FB;font-size:13px;}
+.feedback .ln{border-bottom:1px dashed #94A3B8;height:24px;}
+.credit{margin-top:14px;padding-top:6px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--gray);}
+.print-foot{display:none;}
+table.ptable,table.ptable>tbody,table.ptable>tbody>tr,table.ptable>tbody>tr>td{display:block;border:0;padding:0;margin:0;width:auto;min-width:0;}
+table.ptable>tbody>tr{break-inside:auto;page-break-inside:auto;}
+table.ptable>tfoot{display:none;}
+@media (max-width:640px){
+ body{font-size:14px;}
+ .sheet{padding:16px 14px;margin:8px 8px 18px;border-radius:4px;}
+ .topnav{margin:10px 8px 0;}
+ .meta{grid-template-columns:1fr;} .meta div:nth-child(odd){border-right:none;}
+ .idbar,.two{grid-template-columns:1fr;}
+ .pastes{grid-template-columns:1fr !important;}
+ .hdr{padding-right:86px;}
+ .hdr h1{font-size:18px;}
+ table{min-width:560px;}
+}
+@page{size:A4;margin:12mm 12mm 16mm;}
+@media print{
+ body{background:#fff;font-size:12.5px;}
+ .topnav{display:none;}
+ .sheet{max-width:none;margin:0;padding:0;box-shadow:none;border-radius:0;}
+ .credit{display:none;}
+ table.ptable{display:table;width:100%;border-collapse:collapse;}
+ table.ptable>tbody{display:table-row-group;} table.ptable>tbody>tr{display:table-row;} table.ptable>tbody>tr>td{display:table-cell;}
+ table.ptable>tfoot{display:table-footer-group;}
+ table.ptable>tfoot td{border:0;padding:3mm 0 0;}
+ .print-foot{display:flex;justify-content:space-between;font-size:9pt;color:var(--gray);
+  border-top:0.6pt solid var(--line);padding-top:1.5mm;}
+ .paste{min-height:118px;}
+ h2.sec{margin:11px 0 5px;}
+ .card{padding:8px 10px;} .card>*+*{margin-top:6px;}
+ .writebox .ln{height:22px;}
+ .mission,.meta{margin-top:7px;}
+ .sec-block{break-inside:auto;}
+ .keep{break-inside:avoid;page-break-inside:avoid;}
+}
+
+.rules{margin-top:8px;background:#FBF4E6;border-left:5px solid var(--gold);border-radius:8px;padding:7px 12px;font-size:13px;color:#6B4A12;}
+.scope{margin-top:8px;background:var(--soft);border-left:5px solid var(--teal);border-radius:8px;padding:7px 12px;font-size:13px;}
+.tbar{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px;}
+.tbar div{border:1.6px solid var(--line);border-radius:9px;padding:5px 10px;font-size:12.5px;background:#fff;text-align:center;}
+.tbar b{display:block;color:var(--deep);font-size:15px;}
+.q{border:1.3px solid var(--line);border-radius:10px;padding:8px 11px;background:#fff;}
+.q+.q{margin-top:7px;}
+.q .qh{display:flex;gap:8px;align-items:flex-start;}
+.q .qn{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:var(--deep);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.q .qt{flex:1 1 auto;font-size:13.5px;}
+.q .qp{flex:0 0 auto;font-size:11.5px;color:#fff;background:var(--gray);padding:1px 8px;border-radius:999px;font-weight:700;margin-top:2px;}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:3px 14px;margin:6px 0 0 30px;font-size:13px;}
+.opts.one{grid-template-columns:1fr;}
+.opts span{display:block;}
+.ans{color:#C0392B;font-weight:800;}
+.key{margin:6px 0 0 30px;font-size:12.6px;color:#C0392B;background:#FDF2F0;border-left:4px solid #C0392B;border-radius:6px;padding:4px 9px;}
+code{font-family:Consolas,'Microsoft JhengHei',monospace;font-size:12.5px;background:#F1F5F9;padding:0 4px;border-radius:4px;}
+.sa{margin:6px 0 0 30px;}
+.sa .ln{border-bottom:1px dashed #A7C4B5;height:26px;}
+.sa .ref{font-size:12.8px;color:#C0392B;line-height:1.6;}
+.sa .rub{margin-top:5px;font-size:12.2px;color:#6B4A12;background:#FBF4E6;border-left:4px solid var(--gold);border-radius:6px;padding:4px 9px;}
+.prep .chk{font-size:13px;}
+.score{margin-top:12px;border:1.6px solid var(--deep);border-radius:10px;overflow:hidden;}
+.score table{font-size:12.5px;}
+.score td.n{text-align:center;white-space:nowrap;}
+@media print{ .q{break-inside:avoid;page-break-inside:avoid;} .sa .ln{height:23px;} .opts{margin-top:4px;} }
+@media (max-width:640px){ .opts{grid-template-columns:1fr;margin-left:0;} .sa,.key{margin-left:0;} .tbar{grid-template-columns:1fr;} }
+</style></head>
+<body>
+<nav class="topnav"><a class="home" href="../index.html">← 回教學懶人包首頁</a><a href="../m1.html">模組活動一頁面</a><a href="W13_M1.html">課後學習單（後測）</a><a class="dl" href="W13_M1_pre.pdf" download>下載 PDF</a><a class="dl" href="W13_M1_pre.docx" download>下載 Word</a></nav>
+<table class="ptable"><tfoot><tr><td><div class="print-foot"><span>NDHU 自資系 游豐兆 博士生製作｜指導教授 楊悠娟 副教授</span><span>環境化學 W13 課前學習單（前測）</span></div></td></tr></tfoot><tbody><tr><td>
+<main class="sheet">
+
+<header class="hdr">
+  <div class="badge"><b>W13</b><span>WEEK</span></div>
+  <div class="eyebrow">01 / MODULE ONE　·　課前學習單 PRE-TEST</div>
+  <h1>模組活動一：公開資料、API 與 Prompt-driven Notebook</h1>
+  <div class="en">Environmental Chemistry × Generative AI — Hualien Air Quality PBL · Pre-test</div>
+  <div class="tag">上課前先確認：你知道 API 與金鑰是什麼、好 Prompt 長什麼樣、花蓮站的欄位在說什麼化學</div>
+</header>
+<div class="meta">
+  <div><b>課程</b>環境化學（NRES20050）｜115 學年度第 1 學期</div><div><b>週次</b>W13　第十三週</div>
+  <div><b>模組</b>模組活動一：公開資料、API 與 Prompt-driven Notebook</div><div><b>上課日期</b>2026/11/30（一）（課堂一開始作答）</div>
+  <div><b>授課／助教</b>楊悠娟 副教授／游豐兆 博士生</div><div><b>作答時間</b>20 分鐘（基礎 10 分鐘＋進階 10 分鐘）</div>
+  <div class="full"><b>繳交方式</b><b>課堂作答 20 分鐘</b>（基礎題約 10 分鐘、進階題約 10 分鐘），紙本或平板填寫皆可。作答完成後以手機<b>拍照或掃描成 PDF</b>，當堂上傳 e 學苑「W13 課前學習單」繳交區：<a href="https://elearn4.ndhu.edu.tw/moodle/course/view.php?id=17380">https://elearn4.ndhu.edu.tw/moodle/course/view.php?id=17380</a>（以東華學號登入）。</div>
+</div>
+<div class="idbar">
+  <div><b>組別</b>　第 <span class="fill" style="min-width:40px"></span> 組</div>
+  <div><b>學號</b>　<span class="fill" style="min-width:120px"></span></div>
+  <div><b>姓名</b>　<span class="fill" style="min-width:120px"></span></div>
+</div>
+<div class="tbar"><div><b>100 分</b>總分</div><div><b>★ 基礎題 8 題</b>每題 8 分，共 64 分｜約 10 分鐘</div>
+<div><b>★★ 進階題 3 題</b>每題 12 分，共 36 分｜約 10 分鐘</div></div>
+<div class="rules"><b>作答說明</b>　① 前測用來了解你的先備知識，並與課後學習單（後測）對照學習成效，請依<b>目前所知</b>誠實作答，不確定也盡量寫。② 作答期間<b>不使用 AI、不查網路、不討論</b>。③ 基礎題 ★ 每題 8 分（單選請圈選代號；填空請填在底線上）；進階題 ★★ 每題 12 分（簡答，寫 2–4 句即可）。</div>
+<div class="scope"><b style="color:#065A82">測驗範圍</b>　開放資料與 API 基本觀念、Prompt 的 6 個零件、金鑰安全、花蓮站污染物欄位的化學意義（課本第 8–11 章大氣化學）（對應課後學習單的任務，題目不重複）</div><h2 class="sec"><span class="n" style="background:#1C7293">★</span>基礎題（單選／填空）　建議作答 10 分鐘<span class="pt">8 題 × 8 分＝64 分</span></h2><div class="q"><div class="qh"><span class="qn">1</span><span class="qt">什麼是 API（Application Programming Interface）？</span><span class="qp">8 分</span></div><div class="opts one"><span>（A）只能用瀏覽器打開、給人看的網頁</span><span>（B）程式之間「用網址提出請求、對方回傳資料」的約定介面，程式可以直接讀取</span><span>（C）一種 Excel 試算表的檔案格式</span><span>（D）Google Colab 的付費功能</span></div></div><div class="q"><div class="qh"><span class="qn">2</span><span class="qt">環境部 API 網址 <code>https://data.moenv.gov.tw/api/v2/<b>aqx_p_488</b>?api_key=…&amp;format=JSON</code> 中，粗體的 <b>aqx_p_488</b> 是什麼？</span><span class="qp">8 分</span></div><div class="opts one"><span>（A）測站代碼（花蓮站）</span><span>（B）使用者帳號</span><span>（C）資料集代碼 DataID（空氣品質監測小時值，歷史）</span><span>（D）抓取日期</span></div></div><div class="q"><div class="qh"><span class="qn">3</span><span class="qt">網址裡的 <b>api_key</b>（API 金鑰）性質最接近下列哪一項？</span><span class="qp">8 分</span></div><div class="opts one"><span>（A）公開的網站名稱，任何人都可以看</span><span>（B）測站的地址</span><span>（C）檔案的副檔名</span><span>（D）個人的帳號密碼：代表「你」在使用平臺，不可外流</span></div></div><div class="q"><div class="qh"><span class="qn">4</span><span class="qt">環境部 API 回傳的 <b>JSON</b> 格式，下列敘述何者正確？</span><span class="qp">8 分</span></div><div class="opts one"><span>（A）是用「鍵：值」成對排列的文字資料（如 "sitename": "花蓮"），程式容易讀成表格</span><span>（B）只能用 Excel 打開</span><span>（C）是一種圖片格式</span><span>（D）必須先列印出來才能閱讀</span></div></div><div class="q"><div class="qh"><span class="qn">5</span><span class="qt">你想畫「花蓮站近一個月 O₃ 的日變化」。該用哪一支資料集？</span><span class="qp">8 分</span></div><div class="opts one"><span>（A）aqx_p_432：AQI 現況，每小時更新、只有最新一筆</span><span>（B）兩支都不行，只能人工抄監測網</span><span>（C）aqx_p_488：空氣品質監測小時值，可回溯歷史逐時資料</span><span>（D）哪一支都一樣</span></div></div><div class="q"><div class="qh"><span class="qn">6</span><span class="qt">關於 API 金鑰的安全，下列哪一個做法<b>正確</b>？</span><span class="qp">8 分</span></div><div class="opts one"><span>（A）把金鑰直接寫在程式碼第一行，再把筆記本分享給全組</span><span>（B）把真正的金鑰貼進 Gemini 對話，請它幫我寫程式</span><span>（C）存在 Colab「密鑰」中，程式用 userdata.get('MOENV_API_KEY') 讀取；截圖前先遮住</span><span>（D）金鑰只是一串亂碼，截圖不必遮蔽</span></div></div><div class="q"><div class="qh"><span class="qn">7</span><span class="qt">好的 Prompt 有 6 個零件：① 任務 ② 資料來源＋樣本 ③ 英文欄位名 ④ 輸出形式 ⑤ 限制與說明 ⑥ 驗證。下列哪一句屬於「⑥ 驗證」？</span><span class="qp">8 分</span></div><div class="opts one"><span>（A）你是一個 Python 資料科學家</span><span>（B）請先印出欄位名稱和前 5 筆資料讓我確認，再往下做</span><span>（C）請在程式碼加上詳細的中文註解</span><span>（D）把結果整理成 DataFrame 並存成 CSV</span></div></div><div class="q"><div class="qh"><span class="qn">8</span><span class="qt">單位與化學意義填空：O₃、NO₂、NOₓ 欄位的單位是 <span class="fill" style="min-width:72px"></span>（體積比），PM₂.₅ 的單位是 <span class="fill" style="min-width:100px"></span>（質量濃度）；NOₓ ＝ <span class="fill" style="min-width:60px"></span> ＋ <span class="fill" style="min-width:72px"></span>。</span><span class="qp">8 分</span></div></div><h2 class="sec"><span class="n" style="background:#2E7D5B">★★</span>進階題（簡答）　建議作答 10 分鐘<span class="pt">3 題 × 12 分＝36 分</span></h2><div class="q"><div class="qh"><span class="qn">9</span><span class="qt">同學寫了這個 Prompt 給 Gemini：「<b>幫我抓花蓮的空氣資料。</b>」結果 AI 寫出的程式抓錯資料集、欄位也不對。請把它改寫成一個好 Prompt（至少包含 6 個零件中的 4 個），並在句尾用括號標出你用了哪些零件。</span><span class="qp">12 分</span></div><div class="sa"><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div><div class="q"><div class="qh"><span class="qn">10</span><span class="qt">小花把金鑰寫在 Colab 程式碼第一行，再把筆記本設成「知道連結的任何人都可以檢視」貼到班級群組。請指出<b>兩個</b>風險，並寫出她應該怎麼做（至少兩個步驟）。</span><span class="qp">12 分</span></div><div class="sa"><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div><div class="q"><div class="qh"><span class="qn">11</span><span class="qt">某天花蓮站 O₃ 讀值 46.7 ppb、PM₂.₅ 讀值 20 μg/m³，同學說「所以 O₃ 比 PM₂.₅ 嚴重」。請說明為什麼這兩個數字<b>不能直接比大小</b>，並說明 AQI 與這些濃度值有什麼不同。</span><span class="qp">12 分</span></div><div class="sa"><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div><h2 class="sec"><span class="n" style="background:#C99A3E">☑</span>課前準備自我勾選（不計分，請誠實勾選）</h2><div class="card prep keep"><div class="chk"><span class="box"></span><span>我已在「環境部環境資料開放平臺」註冊會員，並在信箱收到個人 API 金鑰。</span></div><div class="chk"><span class="box"></span><span>我已把金鑰存進 Google Colab 左側「密鑰（Secrets）」，名稱設為 <b>MOENV_API_KEY</b>，並開啟「筆記本存取權」。</span></div><div class="chk"><span class="box"></span><span>我有可用的 Google 帳號，能開啟 Google Colab 並「複製到雲端硬碟」。</span></div><div class="chk"><span class="box"></span><span>我已瀏覽教學懶人包「模組活動一」頁面，知道今天要用 aqx_p_432（現況）與 aqx_p_488（歷史）兩支資料集。</span></div><div class="chk"><span class="box"></span><span>若以上任一項未完成，我會在上課開始前告知助教（可先用離線備援資料）。</span></div></div><div class="score keep"><table><colgroup><col style="width:34%"><col style="width:16%"><col style="width:16%"><col style="width:34%"></colgroup>
+<tr><th>評分</th><th>基礎題（64）</th><th>進階題（36）</th><th>總分（100）／評分者</th></tr>
+<tr><td style="height:9mm">助教批改欄（學生不填）</td><td class="n"></td><td class="n"></td><td></td></tr></table></div>
+<footer class="credit"><span>國立東華大學 自然資源與環境學系｜環境化學 NRES20050｜115-1「生成式 AI 融入專業課程」計畫｜W13 課前學習單（前測）</span><span>NDHU 自資系 游豐兆 博士生製作｜指導教授 楊悠娟 副教授</span></footer>
+</main>
+</td></tr></tbody></table>
+</body></html>

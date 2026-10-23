@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="游豐兆 博士生（指導教授 楊悠娟 副教授）">
+<title>環境化學 W16 課前學習單（前測）｜模組活動三：環境化學解讀與 AI 查證</title>
+<style>
+:root{--navy:#0B1F3A;--deep:#065A82;--teal:#1C7293;--green:#2E7D5B;--moss:#5FA98A;--gold:#C99A3E;
+--bg:#F5F9FA;--ink:#1E293B;--gray:#64748B;--line:#CBD5E1;--soft:#EAF3F6;}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif;color:var(--ink);background:var(--bg);
+ line-height:1.55;font-size:14px;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+a{color:var(--teal);}
+.topnav{max-width:210mm;margin:14px auto 0;display:flex;flex-wrap:wrap;gap:8px;padding:0 4px;}
+.topnav a{display:inline-block;text-decoration:none;font-size:13px;font-weight:700;padding:5px 12px;border-radius:999px;
+ background:#fff;border:1.5px solid var(--teal);color:var(--teal);}
+.topnav a.home{background:var(--navy);border-color:var(--navy);color:#fff;}
+.topnav a.dl{border-color:var(--gold);color:#8A6420;}
+.sheet{max-width:210mm;margin:10px auto 24px;background:#fff;padding:12mm 12mm 8mm;box-shadow:0 4px 22px rgba(11,31,58,.12);border-radius:6px;}
+.hdr{background:var(--navy);color:#fff;border-radius:12px;padding:14px 92px 13px 18px;position:relative;overflow:hidden;}
+.hdr::after{content:"";position:absolute;right:-50px;top:-60px;width:190px;height:190px;border-radius:50%;background:#12305A;}
+.hdr>*{position:relative;z-index:1;}
+.hdr .eyebrow{color:var(--moss);font-weight:700;font-size:12px;letter-spacing:1.5px;}
+.hdr h1{margin:3px 0 2px;font-size:21px;line-height:1.35;}
+.hdr .en{font-style:italic;color:#B9C7D8;font-size:12.5px;}
+.hdr .tag{display:inline-block;margin-top:7px;background:var(--teal);border-radius:999px;padding:2px 12px;font-size:12.5px;}
+.hdr .badge{position:absolute;right:18px;top:14px;z-index:2;width:62px;height:62px;border-radius:50%;background:var(--gold);color:var(--navy);
+ display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;}
+.hdr .badge b{font-size:20px;line-height:1;} .hdr .badge span{font-size:9px;letter-spacing:1.5px;}
+.meta{margin-top:10px;display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1.3px solid var(--line);border-radius:10px;overflow:hidden;font-size:13px;}
+.meta div{padding:5px 10px;border-bottom:1px solid var(--line);}
+.meta div:nth-child(odd){border-right:1px solid var(--line);}
+.meta div.full{grid-column:1/-1;border-right:none;}
+.meta b{color:var(--deep);margin-right:6px;}
+.idbar{margin-top:8px;display:grid;grid-template-columns:1fr 1.3fr 1.3fr;gap:8px;}
+.idbar div{border:1.6px solid var(--teal);border-radius:9px;padding:6px 10px;font-size:13px;background:#F3F9FB;}
+.idbar b{color:var(--deep);}
+.fill{display:inline-block;min-width:70px;border-bottom:1.3px dashed #94A3B8;height:15px;vertical-align:bottom;}
+.mission{margin-top:10px;background:var(--soft);border-left:5px solid var(--teal);border-radius:8px;padding:8px 12px;font-size:13.5px;}
+h2.sec{display:flex;align-items:center;gap:9px;margin:16px 0 7px;font-size:17px;color:var(--navy);break-after:avoid;page-break-after:avoid;}
+h2.sec .n{flex:0 0 auto;width:28px;height:28px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;}
+h2.sec .pt{margin-left:auto;flex:0 0 auto;font-size:12px;color:#fff;background:var(--gray);padding:2px 10px;border-radius:999px;font-weight:700;}
+h3.sub{font-size:14.5px;color:var(--deep);margin:10px 0 5px;}
+.card{border:1.3px solid var(--line);border-radius:11px;padding:10px 12px;background:#fff;}
+.card>*+*{margin-top:8px;}
+.goals{margin:0;padding-left:0;list-style:none;}
+.goals li{display:flex;gap:8px;align-items:flex-start;margin:3px 0;font-size:13.5px;}
+.goals .k{flex:0 0 auto;width:20px;height:20px;border-radius:50%;background:var(--green);color:#fff;font-size:11.5px;display:flex;align-items:center;justify-content:center;margin-top:1px;font-weight:700;}
+.goals .t{display:inline-block;font-size:11px;color:var(--deep);background:var(--soft);border:1px solid #BFD9E2;border-radius:999px;padding:0 7px;margin-left:4px;white-space:nowrap;}
+p.d{margin:0;font-size:13.5px;}
+.tw{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:12.5px;}
+table.small{font-size:11px;}
+th,td{border:1px solid var(--line);padding:4px 6px;vertical-align:top;text-align:left;}
+th{background:#E3EEF2;color:var(--navy);font-weight:700;}
+tr{break-inside:avoid;page-break-inside:avoid;}
+td.c{color:var(--gray);font-size:11.5px;}
+.writebox{border:1.5px dashed var(--moss);border-radius:9px;padding:6px 10px;background:#FAFDFB;}
+.writebox .q{font-size:13px;margin-bottom:2px;}
+.writebox .ln{border-bottom:1px dashed #A7C4B5;height:26px;}
+.pastes{display:grid;gap:10px;}
+.paste{border:2px dashed #93B4C2;border-radius:10px;background:#F5FAFC;color:var(--gray);font-size:12px;min-height:150px;
+ display:flex;align-items:center;justify-content:center;text-align:center;padding:8px;}
+.code{background:var(--navy);color:#E2E8F0;border-radius:9px;padding:9px 12px;font-family:Consolas,'Microsoft JhengHei',monospace;
+ font-size:12px;white-space:pre-wrap;word-break:break-all;line-height:1.6;}
+.code .h{color:var(--gold);font-weight:700;display:block;margin-bottom:2px;font-family:'Microsoft JhengHei','Noto Sans TC',sans-serif;}
+.note{border-radius:8px;padding:7px 11px;font-size:12.8px;}
+.note.tip{background:var(--soft);border-left:4px solid var(--teal);color:#0E4157;}
+.note.warn{background:#FBF4E6;border-left:4px solid var(--gold);color:#6B4A12;}
+.self{background:#F1F8F4;border:1.3px solid #BFDCCB;border-left:5px solid var(--green);border-radius:8px;padding:7px 11px;font-size:12.6px;color:#1F4D37;}
+.self .lab{font-weight:800;color:var(--green);margin-right:6px;}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:13.2px;margin:3px 0;}
+.box{flex:0 0 auto;width:14px;height:14px;border:1.8px solid var(--deep);border-radius:3px;margin-top:3px;}
+.two{display:grid;grid-template-columns:1.2fr 1fr;gap:14px;}
+.sign{margin-top:8px;font-size:13px;}
+.rub th:nth-child(2),.rub td:nth-child(2),.rub th:nth-child(4),.rub td:nth-child(4){text-align:center;white-space:nowrap;}
+.rub tr.total td{background:#F3F6F8;font-weight:800;}
+.dim{margin-top:8px;}
+.dim th{width:22%;}
+.lv{display:inline-block;font-weight:800;padding:0 8px;border-radius:999px;color:#fff;font-size:11.5px;}
+.feedback{margin-top:10px;border:1.6px solid var(--deep);border-radius:10px;padding:8px 12px;background:#F3F8FB;font-size:13px;}
+.feedback .ln{border-bottom:1px dashed #94A3B8;height:24px;}
+.credit{margin-top:14px;padding-top:6px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--gray);}
+.print-foot{display:none;}
+table.ptable,table.ptable>tbody,table.ptable>tbody>tr,table.ptable>tbody>tr>td{display:block;border:0;padding:0;margin:0;width:auto;min-width:0;}
+table.ptable>tbody>tr{break-inside:auto;page-break-inside:auto;}
+table.ptable>tfoot{display:none;}
+@media (max-width:640px){
+ body{font-size:14px;}
+ .sheet{padding:16px 14px;margin:8px 8px 18px;border-radius:4px;}
+ .topnav{margin:10px 8px 0;}
+ .meta{grid-template-columns:1fr;} .meta div:nth-child(odd){border-right:none;}
+ .idbar,.two{grid-template-columns:1fr;}
+ .pastes{grid-template-columns:1fr !important;}
+ .hdr{padding-right:86px;}
+ .hdr h1{font-size:18px;}
+ table{min-width:560px;}
+}
+@page{size:A4;margin:12mm 12mm 16mm;}
+@media print{
+ body{background:#fff;font-size:12.5px;}
+ .topnav{display:none;}
+ .sheet{max-width:none;margin:0;padding:0;box-shadow:none;border-radius:0;}
+ .credit{display:none;}
+ table.ptable{display:table;width:100%;border-collapse:collapse;}
+ table.ptable>tbody{display:table-row-group;} table.ptable>tbody>tr{display:table-row;} table.ptable>tbody>tr>td{display:table-cell;}
+ table.ptable>tfoot{display:table-footer-group;}
+ table.ptable>tfoot td{border:0;padding:3mm 0 0;}
+ .print-foot{display:flex;justify-content:space-between;font-size:9pt;color:var(--gray);
+  border-top:0.6pt solid var(--line);padding-top:1.5mm;}
+ .paste{min-height:118px;}
+ h2.sec{margin:11px 0 5px;}
+ .card{padding:8px 10px;} .card>*+*{margin-top:6px;}
+ .writebox .ln{height:22px;}
+ .mission,.meta{margin-top:7px;}
+ .sec-block{break-inside:auto;}
+ .keep{break-inside:avoid;page-break-inside:avoid;}
+}
+
+.rules{margin-top:8px;background:#FBF4E6;border-left:5px solid var(--gold);border-radius:8px;padding:7px 12px;font-size:13px;color:#6B4A12;}
+.scope{margin-top:8px;background:var(--soft);border-left:5px solid var(--teal);border-radius:8px;padding:7px 12px;font-size:13px;}
+.tbar{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px;}
+.tbar div{border:1.6px solid var(--line);border-radius:9px;padding:5px 10px;font-size:12.5px;background:#fff;text-align:center;}
+.tbar b{display:block;color:var(--deep);font-size:15px;}
+.q{border:1.3px solid var(--line);border-radius:10px;padding:8px 11px;background:#fff;}
+.q+.q{margin-top:7px;}
+.q .qh{display:flex;gap:8px;align-items:flex-start;}
+.q .qn{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:var(--deep);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.q .qt{flex:1 1 auto;font-size:13.5px;}
+.q .qp{flex:0 0 auto;font-size:11.5px;color:#fff;background:var(--gray);padding:1px 8px;border-radius:999px;font-weight:700;margin-top:2px;}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:3px 14px;margin:6px 0 0 30px;font-size:13px;}
+.opts.one{grid-template-columns:1fr;}
+.opts span{display:block;}
+.ans{color:#C0392B;font-weight:800;}
+.key{margin:6px 0 0 30px;font-size:12.6px;color:#C0392B;background:#FDF2F0;border-left:4px solid #C0392B;border-radius:6px;padding:4px 9px;}
+code{font-family:Consolas,'Microsoft JhengHei',monospace;font-size:12.5px;background:#F1F5F9;padding:0 4px;border-radius:4px;}
+.sa{margin:6px 0 0 30px;}
+.sa .ln{border-bottom:1px dashed #A7C4B5;height:26px;}
+.sa .ref{font-size:12.8px;color:#C0392B;line-height:1.6;}
+.sa .rub{margin-top:5px;font-size:12.2px;color:#6B4A12;background:#FBF4E6;border-left:4px solid var(--gold);border-radius:6px;padding:4px 9px;}
+.prep .chk{font-size:13px;}
+.score{margin-top:12px;border:1.6px solid var(--deep);border-radius:10px;overflow:hidden;}
+.score table{font-size:12.5px;}
+.score td.n{text-align:center;white-space:nowrap;}
+@media print{ .q{break-inside:avoid;page-break-inside:avoid;} .sa .ln{height:23px;} .opts{margin-top:4px;} }
+@media (max-width:640px){ .opts{grid-template-columns:1fr;margin-left:0;} .sa,.key{margin-left:0;} .tbar{grid-template-columns:1fr;} }
+</style></head>
+<body>
+<nav class="topnav"><a class="home" href="../index.html">← 回教學懶人包首頁</a><a href="../m3.html">模組活動三頁面</a><a href="W16_M3.html">課後學習單（後測）</a><a class="dl" href="W16_M3_pre.pdf" download>下載 PDF</a><a class="dl" href="W16_M3_pre.docx" download>下載 Word</a></nav>
+<table class="ptable"><tfoot><tr><td><div class="print-foot"><span>NDHU 自資系 游豐兆 博士生製作｜指導教授 楊悠娟 副教授</span><span>環境化學 W16 課前學習單（前測）</span></div></td></tr></tfoot><tbody><tr><td>
+<main class="sheet">
+
+<header class="hdr">
+  <div class="badge"><b>W16</b><span>WEEK</span></div>
+  <div class="eyebrow">03 / MODULE THREE　·　課前學習單 PRE-TEST</div>
+  <h1>模組活動三：環境化學解讀與 AI 查證</h1>
+  <div class="en">Environmental Chemistry × Generative AI — Hualien Air Quality PBL · Pre-test</div>
+  <div class="tag">上課前先確認：你知道 AI 幻覺有哪幾種、什麼叫可查證的主張、去哪裡查，以及一個測站能代表誰</div>
+</header>
+<div class="meta">
+  <div><b>課程</b>環境化學（NRES20050）｜115 學年度第 1 學期</div><div><b>週次</b>W16　第十六週</div>
+  <div><b>模組</b>模組活動三：環境化學解讀與 AI 查證</div><div><b>上課日期</b>2026/12/21（一）（課堂一開始作答）</div>
+  <div><b>授課／助教</b>楊悠娟 副教授／游豐兆 博士生</div><div><b>作答時間</b>20 分鐘（基礎 10 分鐘＋進階 10 分鐘）</div>
+  <div class="full"><b>繳交方式</b><b>課堂作答 20 分鐘</b>（基礎題約 10 分鐘、進階題約 10 分鐘），紙本或平板填寫皆可。作答完成後以手機<b>拍照或掃描成 PDF</b>，當堂上傳 e 學苑「W16 課前學習單」繳交區：<a href="https://elearn4.ndhu.edu.tw/moodle/course/view.php?id=17380">https://elearn4.ndhu.edu.tw/moodle/course/view.php?id=17380</a>（以東華學號登入）。</div>
+</div>
+<div class="idbar">
+  <div><b>組別</b>　第 <span class="fill" style="min-width:40px"></span> 組</div>
+  <div><b>學號</b>　<span class="fill" style="min-width:120px"></span></div>
+  <div><b>姓名</b>　<span class="fill" style="min-width:120px"></span></div>
+</div>
+<div class="tbar"><div><b>100 分</b>總分</div><div><b>★ 基礎題 8 題</b>每題 8 分，共 64 分｜約 10 分鐘</div>
+<div><b>★★ 進階題 3 題</b>每題 12 分，共 36 分｜約 10 分鐘</div></div>
+<div class="rules"><b>作答說明</b>　① 前測用來了解你的先備知識，並與課後學習單（後測）對照學習成效，請依<b>目前所知</b>誠實作答，不確定也盡量寫。② 作答期間<b>不使用 AI、不查網路、不討論</b>。③ 基礎題 ★ 每題 8 分（單選請圈選代號；填空請填在底線上）；進階題 ★★ 每題 12 分（簡答，寫 2–4 句即可）。</div>
+<div class="scope"><b style="color:#065A82">測驗範圍</b>　AI 幻覺的四種類型、可查證的主張、查證來源（課本、測站基本資料 aqx_p_07、Google Scholar、NotebookLM）、測站類型與代表性、數據偏誤與環境正義、負責任使用 AI（對應課後學習單的任務，題目不重複）</div><h2 class="sec"><span class="n" style="background:#1C7293">★</span>基礎題（單選／填空）　建議作答 10 分鐘<span class="pt">8 題 × 8 分＝64 分</span></h2><div class="q"><div class="qh"><span class="qn">1</span><span class="qt">什麼是「AI 幻覺」？</span><span class="qp">8 分</span></div><div class="opts one"><span>（A）AI 當機或沒有回應</span><span>（B）AI 拒絕回答敏感問題</span><span>（C）AI 說得流暢、有自信，內容卻與事實不符（例如捏造文獻、搞錯反應順序）</span><span>（D）AI 畫出的圖顏色不好看</span></div></div><div class="q"><div class="qh"><span class="qn">2</span><span class="qt">你在 Prompt 寫「花蓮 NOₓ 早上 8 點最高」，AI 便順著解釋「通勤尖峰排放」；但你的數據其實是 19 時最高。這屬於哪一類幻覺？</span><span class="qp">8 分</span></div><div class="opts one"><span>（A）照抄前提：Prompt 寫錯，AI 順著錯，不會質疑你</span><span>（B）捏造文獻</span><span>（C）機制錯誤</span><span>（D）這不是幻覺，是你的資料有問題</span></div></div><div class="q"><div class="qh"><span class="qn">3</span><span class="qt">AI 回答中寫「根據陳某某（2019）對花蓮臭氧的研究……」，但你在 Google Scholar 搜不到這篇、DOI 也打不開。正確處置是？</span><span class="qp">8 分</span></div><div class="opts one"><span>（A）AI 讀過的資料比我多，應該相信它</span><span>（B）自己改個年份或作者後引用</span><span>（C）判定為「無法證實」，不可引用；在查證表標記並寫下搜尋過程</span><span>（D）直接刪掉，不用記錄</span></div></div><div class="q"><div class="qh"><span class="qn">4</span><span class="qt">下列哪一句是「可查證的主張」（可以被證實或推翻）？</span><span class="qp">8 分</span></div><div class="opts one"><span>（A）臭氧的形成很複雜</span><span>（B）NO₂ 受紫外光照射會光解成 NO 與 O 原子，O 再與 O₂ 結合成 O₃</span><span>（C）空氣品質很重要</span><span>（D）AI 的解釋很有道理</span></div></div><div class="q"><div class="qh"><span class="qn">5</span><span class="qt">要查「花蓮站是哪一種測站（一般／交通／工業）、地址在哪」，最直接的來源是？</span><span class="qp">8 分</span></div><div class="opts one"><span>（A）課本大氣化學章節</span><span>（B）環境部開放資料「空氣品質監測站基本資料」aqx_p_07（或空氣品質監測網測站介紹頁）</span><span>（C）Google Scholar</span><span>（D）直接問 AI</span></div></div><div class="q"><div class="qh"><span class="qn">6</span><span class="qt">花蓮站是位於花蓮市中正路的「一般站」。這一站的數據最能代表？</span><span class="qp">8 分</span></div><div class="opts"><span>（A）花蓮市區居民生活環境的空氣</span><span>（B）整個花蓮縣</span><span>（C）和平水泥專業區周邊</span><span>（D）全臺灣</span></div></div><div class="q"><div class="qh"><span class="qn">7</span><span class="qt">關於 NotebookLM 的特性，下列何者正確？</span><span class="qp">8 分</span></div><div class="opts one"><span>（A）會自動上網找所有相關資料</span><span>（B）只根據你匯入的文件回答，適合當查證對照；但仍要回到原文核對頁碼</span><span>（C）不會出錯，可以直接引用</span><span>（D）可以取代課本與期刊文獻</span></div></div><div class="q"><div class="qh"><span class="qn">8</span><span class="qt">AI 說：「NO ＋ O₃ 是生成臭氧的反應。」正確的判定是？</span><span class="qp">8 分</span></div><div class="opts one"><span>（A）✔ 正確</span><span>（B）△ 部分正確</span><span>（C）✘ 幻覺（機制錯誤）：NO ＋ O₃ → NO₂ ＋ O₂ 是「消耗」O₃ 的滴定反應；生成 O₃ 的是 O ＋ O₂ ＋ M → O₃ ＋ M</span><span>（D）無法查證</span></div></div><h2 class="sec"><span class="n" style="background:#2E7D5B">★★</span>進階題（簡答）　建議作答 10 分鐘<span class="pt">3 題 × 12 分＝36 分</span></h2><div class="q"><div class="qh"><span class="qn">9</span><span class="qt">請讀下面這段 AI 回答，拆成<b>至少三條</b>可查證的主張，並在每條後面標出要去哪裡查（課本／你的數據／aqx_p_07 測站資料／Scholar）：<br>「花蓮<b>春季</b>日照強，<b>汽車排放大量 NOₓ</b>，在<b>早上 8 點達到最高</b>，光解後於<b>下午 1–3 點生成 O₃ 峰值</b>，因此 <b>NOₓ 與 O₃ 呈明顯負相關</b>。」</span><span class="qp">12 分</span></div><div class="sa"><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div><div class="q"><div class="qh"><span class="qn">10</span><span class="qt">數據偏誤與環境正義：你的資料只有花蓮站<b>一站</b>、<b>30 天</b>、<b>秋季</b>，O₃ 有 6 筆缺值，NO₂ 以 1 ppb 為最小單位記錄。請寫出<b>兩個</b>這些限制會如何影響 AI 推論的例子，以及<b>一個</b>「誰的空氣沒有被測站看見」的例子。</span><span class="qp">12 分</span></div><div class="sa"><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div><div class="q"><div class="qh"><span class="qn">11</span><span class="qt">負責任地使用 AI：請寫出你在期末「花蓮在地環境數據 AI 協作解讀報告書」中會遵守的<b>三條</b> AI 使用守則（提示：標示來源、查證、金鑰與個資、不竄改數據）。</span><span class="qp">12 分</span></div><div class="sa"><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div><h2 class="sec"><span class="n" style="background:#C99A3E">☑</span>課前準備自我勾選（不計分，請誠實勾選）</h2><div class="card prep keep"><div class="chk"><span class="box"></span><span>我已備妥上週畫的三張圖（24 小時折線圖、NOₓ–O₃ 散佈圖、日變化雙軸圖）與讀圖數字（O₃／NO₂ 最高、最低時刻與數值、r 值）。</span></div><div class="chk"><span class="box"></span><span>我能登入 Google Scholar 與 NotebookLM（Google 帳號）。</span></div><div class="chk"><span class="box"></span><span>我已帶課本（大氣化學第 8–12 章），知道 O₃ 生成與 NO 滴定的反應式在哪幾頁。</span></div><div class="chk"><span class="box"></span><span>我已瀏覽教學懶人包「模組活動三」頁面，知道今天要填「AI 推論查證表」。</span></div></div><div class="score keep"><table><colgroup><col style="width:34%"><col style="width:16%"><col style="width:16%"><col style="width:34%"></colgroup>
+<tr><th>評分</th><th>基礎題（64）</th><th>進階題（36）</th><th>總分（100）／評分者</th></tr>
+<tr><td style="height:9mm">助教批改欄（學生不填）</td><td class="n"></td><td class="n"></td><td></td></tr></table></div>
+<footer class="credit"><span>國立東華大學 自然資源與環境學系｜環境化學 NRES20050｜115-1「生成式 AI 融入專業課程」計畫｜W16 課前學習單（前測）</span><span>NDHU 自資系 游豐兆 博士生製作｜指導教授 楊悠娟 副教授</span></footer>
+</main>
+</td></tr></tbody></table>
+</body></html>
